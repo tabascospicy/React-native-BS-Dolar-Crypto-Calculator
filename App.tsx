@@ -17,8 +17,8 @@ export default function App() {
     const [origin,setOrigin] = useState(0);
     const [destiny,setDestiny] = useState(0);
     const [result, setResult] = useState<number>(0.0);
-
     const [formated, setFormated] = useState(false);
+    const [selected,setSelected] = useState(false);
     const [colocarMonto,setColocarMonto] = useState(false);
       let [fontLoaded] = useFonts({
         Nunito: require("./src/assets/fonts/Nunito/Nunito-Regular.ttf"),
@@ -37,7 +37,7 @@ export default function App() {
     useEffect(() => {
         console.log("pasa");
         if (dolarBS && !formated) {
-            let agregarBS = Object.keys(coins).reduce((acum, element) => {
+            let agregarBS : Coins = Object.keys(coins).reduce((acum, element) => {
                 !coins[element]["BS"]
                     ? (acum[element] = {
                           BS: coins[element]["USD"] * dolarBS,
@@ -88,7 +88,7 @@ export default function App() {
             .post("/price/", data)
             .then((response) => {
                 //    console.log(response.data.data)
-                let addcoins = {
+                let addcoins :Coins = {
                     EUR: {
                         Mount: response.data.data["EUR"]["USD"],
                         Icon: "Icon",
@@ -135,6 +135,8 @@ export default function App() {
                         colocarMonto,
                         setColocarMonto,
                         destiny,
+                        selected,
+                        setSelected,
                         setDestiny,
                         origin,
                         setOrigin

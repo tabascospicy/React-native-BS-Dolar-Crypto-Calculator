@@ -4,18 +4,18 @@ import styles from "./style";
 import { props, CoinType,Coins, GlobalState } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import accounting from "accounting";
-import { IndexPath, Layout, Select, SelectItem,SelectGroup } from "@ui-kitten/components";
+//import { IndexPath, Layout, Select, SelectItem,SelectGroup } from "@ui-kitten/components";
 const Card: FC<props> = (props) => {
     const [text, setText] = useState("0.00");
-    const [selectedOrigin, setSelectedOrigin] = useState(new IndexPath(0));
-    const [selectedDestiny, setSelectedDestiny] = useState(new IndexPath(0));
+    const [selectedOrigin, setSelectedOrigin] = useState();
+    const [selectedDestiny, setSelectedDestiny] = useState();
     //    let inputs : number = 0;
     const State : GlobalState = useContext(StateContext);
     const { setResult, supportedCoins,colocarMonto, setOrigin, setDestiny } = State;
-    useEffect(()=>{
+    /*useEffect(()=>{
      setOrigin &&  setOrigin(prev =>  selectedOrigin.row  );
      setDestiny && setDestiny(prev =>selectedDestiny.row );
-    },[selectedOrigin,selectedDestiny])
+    },[selectedOrigin,selectedDestiny])*/
     const sendChange = (text: string) => {
         let toFormat = text;
         let spaces = toFormat.split("0");
@@ -24,7 +24,7 @@ const Card: FC<props> = (props) => {
         calculateAndSend(formated)
     };
     const calculateAndSend = (amount : number) =>{
-      let row  = selectedOrigin.row;
+     let row  = selectedOrigin.row;
       let key = `${Object.keys(supportedCoins)[row]}`;
       let calculatedMount = supportedCoins[key]["Mount"] * amount;
       setResult((prev) => (selectedDestiny.row == 1) ? calculatedMount * supportedCoins["Bs"]["BS"] : calculatedMount );
@@ -53,28 +53,7 @@ const Card: FC<props> = (props) => {
             <View style={styles.spacing}>
                 <View style={styles.row}>
                     <Text style={styles.titleFont}> De</Text>
-                    <Layout >
-                      <Select 
-                            value={displayValue1}
-                            selectedIndex={selectedOrigin}
-                            onSelect={(index) => setSelectedOrigin(index)}
-                        > 
-                            {Object.keys(supportedCoins).map((element, i) => (
-                                <SelectItem key={i} title={`${element}`} />
-                            ))} 
-                        </Select>
-                    </Layout>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.titleFont}> A</Text>
-                    <Select
-                        value={displayValue}
-                        selectedIndex={selectedDestiny}
-                        onSelect={(index) => setSelectedDestiny(index)}
-                    >
-                             <SelectItem  title={`USD`} />
-                             <SelectItem  title={`BS`} />
-                    </Select>
+                  
                 </View>
                 <View style={styles.inputRow}>
                     <Text style={styles.titleFont}> Monto</Text>

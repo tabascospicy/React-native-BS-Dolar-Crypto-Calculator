@@ -3,7 +3,7 @@
       name?:string
   }
 export interface CoinType extends props {
-  
+  key?:number,
   Mount?:string,
   Title?:string,
   Icon?:string,
@@ -16,9 +16,6 @@ export interface ServerResponse {
 }
 
 export interface Coins {
-    [0] : keyof CoinType,
-    [1] : keyof CoinType,
-    [2] : keyof CoinType,
     Bs? : keyof CoinType,
     EUR? : CoinType,
     PTR? : CoinType,
@@ -35,6 +32,8 @@ export interface GlobalState {
   supportedCoins?:Coins,
   setSelectedCoin? : React.Dispatch<React.SetStateAction<{}>>,
   result? : string,
+  selected?: boolean,
+  setSelected? :  React.Dispatch<React.SetStateAction<boolean>>,
   colocarMonto? : boolean,
   destiny?:number,
   setDestiny?:React.Dispatch<React.SetStateAction<number>>,
