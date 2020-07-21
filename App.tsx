@@ -11,6 +11,7 @@ import { CoinType, Coins } from "./src/interfaces/interfaces";
 import StateProvider from "./src/services/context";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
+import UpdatedCoins from "./src/components/PopOver/PopOver";
 export default function App() {
     const [coins, setCoins] = useState<Coins>();
     const [dolarBS, setDolarBS] = useState(0);
@@ -20,6 +21,7 @@ export default function App() {
     const [formated, setFormated] = useState(false);
     const [selected,setSelected] = useState(false);
     const [colocarMonto,setColocarMonto] = useState(false);
+    const [notify,setNotify] = useState(false);
       let [fontLoaded] = useFonts({
         Nunito: require("./src/assets/fonts/Nunito/Nunito-Regular.ttf"),
     });
@@ -28,6 +30,12 @@ export default function App() {
     useEffect(() => {
         getCripto();
         getPetro();
+     /*  const updateCoins =  setInterval(()=>{
+          getCripto();
+          getPetro();
+          
+        },[1000]);
+        return clearInterval(updateCoins);*/
     }, []);
     useEffect(()=>{
         setColocarMonto(true)
@@ -47,9 +55,9 @@ export default function App() {
             console.log(agregarBS, "finally");
             setCoins((prev) => agregarBS);
             setFormated(true);
+            setNotify(true)
         }
     }, [coins]);
-
     const getCripto = async () => {
         Cripto()
             .get("/pricemulti?fsyms=BTC,ETH,DASH,DOGE,LTC&tsyms=USD")
@@ -140,6 +148,7 @@ export default function App() {
                     }}
                 >
                     <Home name="holi" />
+                    <UpdatedCoins visible={notify} setVisible={setNotify} />
                 </StateProvider.Provider>
             </View>
         </ApplicationProvider>;

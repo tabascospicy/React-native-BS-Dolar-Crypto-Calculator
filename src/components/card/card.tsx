@@ -114,6 +114,7 @@ const Card: FC<props> = (props) => {
                         placeholderTextColor="gray"
                         clearTextOnFocus={true}
                         editable={colocarMonto}
+                        onFocus={()=>setText((prev)=>"")}
                         clearButtonMode="while-editing"
                         keyboardType={"numeric"}
                         value={text}

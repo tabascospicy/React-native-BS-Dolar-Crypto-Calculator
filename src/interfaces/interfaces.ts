@@ -4,12 +4,16 @@
   }
 export interface CoinType extends props {
   keys?:number,
-  Mount?:string,
+  Mount?:string | number,
   Title?:string,
   Icon?:string,
   USD?:number,
   BS?:number | string,
   EUR?:number
+}
+export interface Notifier {
+  visible? : boolean,
+  setVisible : React.Dispatch<React.SetStateAction<boolean>>
 }
 export interface ServerResponse {
   data:Object
@@ -26,6 +30,9 @@ export interface Coins {
     ETH? : CoinType,
     LTC? : CoinType,
     select?: {Title?:string}
+}
+export interface CoinIcon {
+      name? : string
 }
 export interface GlobalState {
   "Bs"?: keyof Coins;

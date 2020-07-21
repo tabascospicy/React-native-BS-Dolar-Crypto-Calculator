@@ -11,6 +11,22 @@
       "heigth":"20",
       "backgroundColor": "#162345"
     },
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+    },
     "platforms": [
       "ios",
       "android",
@@ -27,7 +43,7 @@
     },
     "android": {
       "package": "com.somossistemas.AftimCalc",
-      "versionCode": 1
+      "versionCode": 1.01
     },
     "web": {
       "favicon": "./src/assets/icons/favicon.png"
