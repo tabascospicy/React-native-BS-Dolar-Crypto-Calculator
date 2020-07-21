@@ -1,16 +1,20 @@
-import React, {FC} from 'react';
+import React, {FC,useContext} from 'react';
 import { View } from 'react-native';
 import styles from "./style"
-import {props,CoinType} from "interfaces/interfaces";
+import {props,CoinType,GlobalState} from "interfaces/interfaces";
 import CoinCard from "./../coinCard/coinCard";
-import {testTypes} from "./../../testVariables/coinTypes";
+import StateContext from "./../../services/context";
+const List : FC  = () => {
 
-const List : FC  = ({coins = []}) => {
+const State : GlobalState  = useContext(StateContext);
+
+const {supportedCoins} = State;
 
   return (
     <View style={styles.container}>
-      {coins.map((element :CoinType)  => <CoinCard {...element}/>)}
-      <CoinCard />
+      {Object.keys(supportedCoins).map((element, i:number)  => { 
+        let value = supportedCoins[element];
+        return <CoinCard key={i} {...value}/>})}
     </View>
   );
 }

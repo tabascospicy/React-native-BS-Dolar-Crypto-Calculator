@@ -12,7 +12,10 @@ const style = StyleSheet.create({
       color:"#f8f9fc",
       opacity:0.6,
       letterSpacing:2,
-      fontFamily:"Nunito"
+     // fontFamily:"Nunito"
+  },
+  select:{
+    backgroundColor:"blue"
   },
   spacing:{
     flex:1,
@@ -29,10 +32,19 @@ const style = StyleSheet.create({
     color:"#f8f9fc",
     opacity:0.9,
     letterSpacing:2,
-    fontFamily:"Nunito"
+ //   fontFamily:"Nunito"
   },
   inputRow : {
     flex:2,
+  },
+  inputMount :{
+    width:"100%",
+    borderColor:"#15c0ac",
+    color:"#fff",
+    borderBottomWidth:1,
+    padding : 1,
+    opacity:0.7,
+    borderRadius:20
   }
 })
 

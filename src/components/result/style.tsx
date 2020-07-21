@@ -11,7 +11,7 @@ const style = StyleSheet.create({
       letterSpacing:1,
       color:"#f8f9fc",
       opacity:0.9,
-      fontFamily:"Nunito"
+ //     fontFamily:"Nunito"
   }
 })
 
