@@ -30,9 +30,7 @@ export default function App() {
         getPetro();
     }, []);
     useEffect(()=>{
-      if(origin != 0 && destiny != 0 ){
         setColocarMonto(true)
-      }
     },[origin,destiny])
     useEffect(() => {
         console.log("pasa");
@@ -73,7 +71,6 @@ export default function App() {
                 setCoins((prev) => {
                     return { ...prev, ...ordered };
                 });
-                //     console.log(coins,"cripto")
             })
             .catch((e) => {
                 console.log(e);

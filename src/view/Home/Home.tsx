@@ -8,7 +8,6 @@ import List from "./../../components/list/list";
 import {props,GlobalState} from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 const Home : FC<props>  = ({name}) => {
-  const [select,setSelect] = useState(false);
   const State : GlobalState  = useContext(StateContext);
   const {selected} = State;
  

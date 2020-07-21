@@ -3,7 +3,7 @@
       name?:string
   }
 export interface CoinType extends props {
-  key?:number,
+  keys?:number,
   Mount?:string,
   Title?:string,
   Icon?:string,
@@ -16,7 +16,7 @@ export interface ServerResponse {
 }
 
 export interface Coins {
-    Bs? : keyof CoinType,
+    Bs? :  CoinType,
     EUR? : CoinType,
     PTR? : CoinType,
     USD? : CoinType,
