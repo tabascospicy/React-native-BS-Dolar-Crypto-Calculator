@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState, useEffect } from "react";
-import { Text, Animated, TouchableHighlight } from "react-native";
+import { Text, Animated, TouchableHighlight,Image } from "react-native";
 import styles from "./style";
 import { CoinType } from "interfaces/interfaces";
 import accounting from "accounting";
@@ -31,13 +31,12 @@ const Result: FC<CoinType> = ({
       
             <TouchableHighlight
                 activeOpacity={0.6}
-                underlayColor="#fff"
                 onPress={() => handleTouch(keys)}
                 style={styles.container}
             >
                 <Animated.View style={{ opacity: appear }}>
                     <Text style={styles.icon}> {Icon}</Text>
-                    <Text style={styles.FontTitle}> {Title}</Text>
+                    <Text style={styles.FontTitle}> {Title =="BS" ?"USD"  : Title }</Text>
                     <Text style={styles.FontMount}>
                         {accounting.formatMoney(BS, {
                             symbol: "Bs ",

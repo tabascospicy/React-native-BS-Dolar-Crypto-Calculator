@@ -17,7 +17,7 @@ const Home : FC<props>  = ({name}) => {
       {
         selected ? <Card  /> : <List />
       }
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </View>
   );
 }

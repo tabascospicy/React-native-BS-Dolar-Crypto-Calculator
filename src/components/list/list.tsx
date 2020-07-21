@@ -12,9 +12,9 @@ const {supportedCoins} = State;
 
   return (
     <View style={styles.container}>
-      {Object.keys(supportedCoins).map((element, i:number)  => { 
+   { supportedCoins && Object.keys(supportedCoins).map((element, i:number)  => { 
         let value = supportedCoins[element];
-        return <CoinCard keys={i} key={i} {...value}/>})}
+        return  <CoinCard keys={i} key={i} {...value}/>})}
     </View>
   );
 }

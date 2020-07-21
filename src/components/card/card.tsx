@@ -1,79 +1,111 @@
 import React, { FC, useState, useContext, useEffect } from "react";
-import { Text, View, TextInput , Animated  } from "react-native";
+import {
+    Text,
+    View,
+    TextInput,
+    Animated,
+    TouchableOpacity,
+} from "react-native";
 import styles from "./style";
-import { props, CoinType,Coins, GlobalState } from "interfaces/interfaces";
+import { props, GlobalState } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import accounting from "accounting";
-//import { IndexPath, Layout, Select, SelectItem,SelectGroup } from "@ui-kitten/components";
+import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
+import style from "./style";
+import { AntDesign } from "@expo/vector-icons";
 const Card: FC<props> = (props) => {
     const [text, setText] = useState("0.00");
-    const [selectedOrigin, setSelectedOrigin] = useState();
-    const [selectedDestiny, setSelectedDestiny] = useState();
-    const [appear] = useState(new Animated.Value(0))
+    const [selectedDestiny, setSelectedDestiny] = useState(new IndexPath(0));
+    const [appear] = useState(new Animated.Value(0));
     //    let inputs : number = 0;
+    const State: GlobalState = useContext(StateContext);
+    const { selected,setSelected, setResult, supportedCoins, colocarMonto, origin } = State;
+    const [selectedOrigin, setSelectedOrigin] = useState(supportedCoins && supportedCoins["USD"]);
+    useEffect(() => {
+        Animated.timing(appear, {
+            toValue: 1,
+            useNativeDriver: true,
+            duration: 800,
+        }).start();
+        const selectedName = Object.keys(supportedCoins)[origin];
+        setSelectedOrigin(supportedCoins[selectedName]);
+    }, []);
 
-    useEffect(()=>{
-      Animated.timing(appear, {
-        toValue: 1,
-        useNativeDriver: true,
-        duration: 800,
-    }).start();
-    },[])
-    const State : GlobalState = useContext(StateContext);
-    const { setResult, supportedCoins,colocarMonto,origin } = State;
     /*useEffect(()=>{
      setOrigin &&  setOrigin(prev =>  selectedOrigin.row  );
      setDestiny && setDestiny(prev =>selectedDestiny.row );
     },[selectedOrigin,selectedDestiny])*/
-    const selectedName = Object.keys(supportedCoins)[origin];
-    const selected = supportedCoins[selectedName];
-
     const sendChange = (text: string) => {
-        /*let toFormat = text;
+        let toFormat = text;
         let spaces = toFormat.split("0");
         const formated = parseFloat(text.split(",").join(""));
         setText((prev) => text);
-        calculateAndSend(formated)*/
-    };/*
-    const calculateAndSend = (amount : number) =>{
-     let row  = selectedOrigin.row;
-      let key = `${Object.keys(supportedCoins)[row]}`;
-      let calculatedMount = supportedCoins[key]["Mount"] * amount;
-      setResult((prev) => (selectedDestiny.row == 1) ? calculatedMount * supportedCoins["Bs"]["BS"] : calculatedMount );
+        calculateAndSend(formated);
+    };
+
+    const calculateAndSend = (amount: number) => {
+        let row = origin;
+        let key = `${Object.keys(supportedCoins)[row]}`;
+        let calculatedMount = supportedCoins[key]["Mount"] * amount;
+        setResult &&
+            setResult((prev) =>
+                selectedDestiny.row == 1
+                    ? calculatedMount * supportedCoins["Bs"]["BS"]
+                    : calculatedMount
+            );
+    };
+    const { row } = selectedDestiny;
+    useEffect(() => {
+        if (parseFloat(text.split(",").join("")) > 0) {
+            calculateAndSend(parseFloat(text.split(",").join("")));
+        }
+    }, [selectedDestiny.row]);
+
+    const disappear = ()=>{
+      Animated.timing(appear, {
+        toValue: 0,
+        useNativeDriver: true,
+        duration: 400,
+    }).start()
     }
-   let displayValue1 = Object.keys(supportedCoins)[selectedOrigin.row];
-    let displayValue = ["USD","BS"][selectedDestiny.row];*/
-    /* const addCeros = (value : string)=>{
-      switch (inputs) {
-        case 1:
-          return "0.0" + value
-          break;
-        case 2:
-          "0."+ value
-        break;
-        case 3 :
-          let spaces = value.split("");
-          return spaces[0]+"."+spaces[1]+spaces[2]
-        break;
-        default:
-          return value
-          break;
-      }
-    } */
+    const handleBack = () =>{
+         setSelected &&  setSelected(false)
+    }
     return (
-        <Animated.View style={[styles.container,{opacity:appear}]}>
+        <Animated.View style={[styles.container, { opacity: appear }]}>
             <View style={styles.spacing}>
+                <TouchableOpacity onPress={handleBack}>
+                    <AntDesign
+                        style={{ opacity: 0.8 }}
+                        name="caretleft"
+                        size={24}
+                        color="white"
+                    />
+                </TouchableOpacity>
                 <View style={styles.row}>
                     <Text style={styles.titleFont}> Seleccionada</Text>
-                    <Text style={styles.titleFont}> {selected.Title}</Text>
+                    <Text style={styles.titleFont}>
+                        {selectedOrigin && selectedOrigin["Title"]}
+                    </Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.titleFont}> Tasa</Text>
-                    <Text style={styles.titleFont}> {selected["USD"]} $</Text>
+                    <Text style={[styles.titleFont,{width:"50%"}]}>
+                        {selectedOrigin && (selectedDestiny.row) ? selectedOrigin["BS"] : selectedOrigin && selectedOrigin["Mount"]} $
+                    </Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.titleFont}> Seleccione Destino</Text>
-                    <Text style={styles.titleFont}> Destino</Text>
+                    <Select
+                        style={styles.select}
+                        value={["USD", "BS"][selectedDestiny.row]}
+                        placeholder={"holi"}
+                        selectedIndex={selectedDestiny}
+                        onSelect={(index) => setSelectedDestiny(index)}
+                    >
+                        <SelectItem title={`USD`} />
+                        <SelectItem title={`BS`} />
+                    </Select>
                 </View>
                 <View style={styles.inputRow}>
                     <Text style={styles.titleFont}> Ingrese Monto</Text>

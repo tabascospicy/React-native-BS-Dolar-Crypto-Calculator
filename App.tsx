@@ -12,7 +12,7 @@ import StateProvider from "./src/services/context";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 export default function App() {
-    const [coins, setCoins] = useState<Coins>({select:{Title:"select"}});
+    const [coins, setCoins] = useState<Coins>();
     const [dolarBS, setDolarBS] = useState(0);
     const [origin,setOrigin] = useState(0);
     const [destiny,setDestiny] = useState(0);
@@ -122,7 +122,7 @@ export default function App() {
             });
     };
     const completeFont = () => {
-        return<ApplicationProvider {...eva} theme={eva.light}>
+        return<ApplicationProvider {...eva} theme={eva.dark}>
             <View style={{ flex: 1, backgroundColor: Colors["primary"] }}>
                 <StateProvider.Provider
                     value={{

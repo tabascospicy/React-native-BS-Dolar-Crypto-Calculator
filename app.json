@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "aftim-calc",
-    "slug": "aftim-calc",
+    "name": "Aftim-Calc",
+    "slug": "Aftim-Calc",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icons/icon.png",
+    "icon": "./src/assets/AFTIM.png",
     "splash": {
-      "image": "./src/assets/icons/splash.png",
+      "image": "./src/assets/AFTIM.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "heigth":"20",
+      "backgroundColor": "#162345"
     },
     "platforms": [
       "ios",
@@ -23,6 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.somossistemas.AftimCalc",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./src/assets/icons/favicon.png"

@@ -5,17 +5,23 @@ const style = StyleSheet.create({
     flex:1,
     width:"90%",
     borderRadius:10,
+    maxHeight:500,
     backgroundColor:"#212e4e"
   },
   titleFont:{
       fontSize:16,
       color:"#f8f9fc",
       opacity:0.6,
+     // alignSelf:"flex-start",
+      flexWrap:"wrap",
+      width:"40%",
+      textAlign:"center",
       letterSpacing:2,
      // fontFamily:"Nunito"
   },
   select:{
-    backgroundColor:"blue"
+    maxWidth:120,
+    flex:1,
   },
   spacing:{
     flex:1,
