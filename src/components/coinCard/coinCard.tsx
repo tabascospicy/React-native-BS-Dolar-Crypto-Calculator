@@ -38,35 +38,35 @@ const Result: FC<CoinType> = ({
     const CoinSet = () => {
         switch (Title) {
             case "USD":
-                return <Dolar style={styles.icon} width={20} height={20} />;
+                return <Image  source={require('./../../assets/icons/dollar.png')} style={styles.icon}/>;
                 break;
             case "LTC":
-                return <Lite style={styles.icon} width={20} height={20} />;
+                return <Image  source={require('./../../assets/icons/litecoin.png')} style={styles.icon} />;
                 break;
             case "EUR":
-                return <Euro style={styles.icon} width={20} height={20} />;
+                return <Image  source={require('./../../assets/icons/euro.png')} style={styles.icon} />;
                 break;
             case "ETH":
-                return <Ether style={styles.icon} width={20} height={20} />;
+                return <Image source={require('./../../assets/icons/ethereum.png')} style={styles.icon} />;
                 break;
             case "DASH":
-                return <Dash style={styles.icon} width={20} height={20} />;
+                return <Image source={require('./../../assets/icons/dashcoin.png')} style={styles.icon} />;
                 break;
-            case "Bs":
-                return <Dolar style={styles.icon} width={20} height={20} />;
+            case "BS":
+                return <Image source={require('./../../assets/icons/dollar.png')} style={styles.icon} />;
                 break;
             case "BTC":
-                return <Bitcoin style={styles.icon} width={20} height={20} />;
+                return <Image source={require('./../../assets/icons/bitcoin.png')} style={styles.icon} />;
                 break;
             case "DOGE":
-                return <Dodge style={styles.icon} width={20} height={20} />;
+                return <Image source={require('./../../assets/icons/dogecoin.png')} style={styles.icon} />;
                 break;
             case "PTR":
-                return <Dolar style={styles.icon} width={20} height={20} />;
+                return <Image source={require('./../../assets/icons/petro.png')} style={styles.icon} />;
                 break;
             default:
-                return <Dolar style={styles.icon} width={20} height={20} />;
-                break;
+                return <Image source={require('./../../assets/icons/petro.png')} style={styles.icon} />;
+              break;
         }
     };
 

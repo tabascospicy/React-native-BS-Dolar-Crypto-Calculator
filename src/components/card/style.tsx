@@ -14,8 +14,9 @@ const style = StyleSheet.create({
       opacity:0.6,
      // alignSelf:"flex-start",
       flexWrap:"wrap",
-      width:"40%",
+      width:"43%",
       textAlign:"center",
+      textAlignVertical:"center",
       letterSpacing:2,
      // fontFamily:"Nunito"
   },
@@ -44,13 +45,18 @@ const style = StyleSheet.create({
     flex:2,
   },
   inputMount :{
-    width:"100%",
+    width:"80%",
+    alignSelf:"center",
+    marginTop:10,
     borderColor:"#15c0ac",
     color:"#fff",
-    borderBottomWidth:1,
-    padding : 1,
-    opacity:0.7,
-    borderRadius:20
+    borderBottomWidth:1.5,
+    padding : 0,
+    opacity:0.9,
+  },
+  icon:{
+    width:20,
+    height:20,
   }
 })
 

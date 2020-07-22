@@ -16,7 +16,7 @@ export default function App() {
     const [coins, setCoins] = useState<Coins>();
     const [dolarBS, setDolarBS] = useState(0);
     const [origin,setOrigin] = useState(0);
-    const [destiny,setDestiny] = useState(0);
+    const [destiny,setDestiny] = useState(" $");
     const [result, setResult] = useState<number>(0.0);
     const [formated, setFormated] = useState(false);
     const [selected,setSelected] = useState(false);

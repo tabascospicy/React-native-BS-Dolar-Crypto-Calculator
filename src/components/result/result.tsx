@@ -7,11 +7,11 @@ import accounting from 'accounting';
 
 const Result : FC<props>  = ({name}) => {
   const State : GlobalState  = useContext(StateContext);
-  const {result} = State;
+  const {result , destiny} = State;
  
   return (
     <View style={styles.container}>
-      <Text style={styles.Font}> {result && accounting.formatMoney(result,{symbol:"",thousand:',',decimal:'.'})}</Text>
+      <Text adjustsFontSizeToFit={true} style={styles.Font}> {result && accounting.formatMoney(result,{symbol:destiny,thousand:',',decimal:'.'})}</Text>
     </View>
   );
 }

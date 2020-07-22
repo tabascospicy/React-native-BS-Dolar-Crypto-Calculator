@@ -4,6 +4,7 @@ import {
     View,
     TextInput,
     Animated,
+    Image,
     TouchableOpacity,
 } from "react-native";
 import styles from "./style";
@@ -19,7 +20,7 @@ const Card: FC<props> = (props) => {
     const [appear] = useState(new Animated.Value(0));
     //    let inputs : number = 0;
     const State: GlobalState = useContext(StateContext);
-    const { selected,setSelected, setResult, supportedCoins, colocarMonto, origin } = State;
+    const { selected,setSelected, setResult, supportedCoins, colocarMonto, origin, destiny, setDestiny } = State;
     const [selectedOrigin, setSelectedOrigin] = useState(supportedCoins && supportedCoins["USD"]);
     useEffect(() => {
         Animated.timing(appear, {
@@ -37,9 +38,14 @@ const Card: FC<props> = (props) => {
     },[selectedOrigin,selectedDestiny])*/
     const sendChange = (text: string) => {
         let toFormat = text;
+        if(text ===""){
+          setText((prev) => text);
+          setResult && setResult((prev)=>0);
+           return}
         let spaces = toFormat.split("0");
         const formated = parseFloat(text.split(",").join(""));
         setText((prev) => text);
+        
         calculateAndSend(formated);
     };
 
@@ -47,12 +53,14 @@ const Card: FC<props> = (props) => {
         let row = origin;
         let key = `${Object.keys(supportedCoins)[row]}`;
         let calculatedMount = supportedCoins[key]["Mount"] * amount;
+        setDestiny &&  setDestiny((prev)=>selectedDestiny.row == 1 ? " Bs" : " $")
         setResult &&
             setResult((prev) =>
                 selectedDestiny.row == 1
                     ? calculatedMount * supportedCoins["Bs"]["BS"]
                     : calculatedMount
             );
+            
     };
     const { row } = selectedDestiny;
     useEffect(() => {
@@ -85,7 +93,9 @@ const Card: FC<props> = (props) => {
                 <View style={styles.row}>
                     <Text style={styles.titleFont}> Seleccionada</Text>
                     <Text style={styles.titleFont}>
-                        {selectedOrigin && selectedOrigin["Title"]}
+                         
+                           <CoinSet Title={selectedOrigin && selectedOrigin["Title"]} />
+                        {selectedOrigin && ((selectedOrigin["Title"]=="BS") ? "USD" : selectedOrigin["Title"]) }     
                     </Text>
                 </View>
                 <View style={styles.row}>
@@ -98,12 +108,12 @@ const Card: FC<props> = (props) => {
                     <Text style={styles.titleFont}> Seleccione Destino</Text>
                     <Select
                         style={styles.select}
-                        value={["USD", "BS"][selectedDestiny.row]}
+                        value={["BS", "USD"][selectedDestiny.row]}
                         placeholder={"holi"}
                         selectedIndex={selectedDestiny}
                         onSelect={(index) => setSelectedDestiny(index)}
                     >
-                        <SelectItem title={`USD`} />
+                       {(selectedOrigin) && (selectedOrigin["Title"] !=="BS") && <SelectItem title={`USD`} />}
                         <SelectItem title={`BS`} />
                     </Select>
                 </View>
@@ -125,4 +135,40 @@ const Card: FC<props> = (props) => {
         </Animated.View>
     );
 };
+
+const CoinSet = (Title) => {
+  switch (Title["Title"]) {
+      case "USD":
+          return <Image  source={require('./../../assets/icons/dollar.png')} style={styles.icon}/>;
+          break;
+      case "LTC":
+          return <Image  source={require('./../../assets/icons/litecoin.png')} style={styles.icon} />;
+          break;
+      case "EUR":
+          return <Image  source={require('./../../assets/icons/euro.png')} style={styles.icon} />;
+          break;
+      case "ETH":
+          return <Image source={require('./../../assets/icons/ethereum.png')} style={styles.icon} />;
+          break;
+      case "DASH":
+          return <Image source={require('./../../assets/icons/dashcoin.png')} style={styles.icon} />;
+          break;
+      case "BS":
+          return <Image source={require('./../../assets/icons/dollar.png')} style={styles.icon} />;
+          break;
+      case "BTC":
+          return <Image source={require('./../../assets/icons/bitcoin.png')} style={styles.icon} />;
+          break;
+      case "DOGE":
+          return <Image source={require('./../../assets/icons/dogecoin.png')} style={styles.icon} />;
+          break;
+      case "PTR":
+          return <Image source={require('./../../assets/icons/petro.png')} style={styles.icon} />;
+          break;
+      default:
+          return <Image source={require('./../../assets/icons/petro.png')} style={styles.icon} />;
+        break;
+  }
+};
+
 export default Card;
