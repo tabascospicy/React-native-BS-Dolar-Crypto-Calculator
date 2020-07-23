@@ -2,9 +2,10 @@ import { StyleSheet } from "react-native";
 
 const style = StyleSheet.create({
   container:{
-    height:"30%",
-    maxHeight:300,
+   flex:1,
+   // maxHeight:300,
     flexWrap:"wrap",
+    marginBottom:80,
     alignItems:"center",
     justifyContent:"center",
   },

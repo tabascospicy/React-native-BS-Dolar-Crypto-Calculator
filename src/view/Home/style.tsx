@@ -4,6 +4,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    position:"relative",
+    flexDirection:"column",
     justifyContent: 'center',
   },
 });

@@ -20,6 +20,7 @@ export interface ServerResponse {
 }
 
 export interface Coins {
+   [key:string] : any,
     Bs? :  CoinType,
     EUR? : CoinType,
     PTR? : CoinType,
@@ -35,10 +36,11 @@ export interface CoinIcon {
       name? : string
 }
 export interface GlobalState {
-  "Bs"?: keyof Coins;
+  "Bs"?: keyof Coins,
+  [key:string] : any,
   supportedCoins?:Coins,
   setSelectedCoin? : React.Dispatch<React.SetStateAction<{}>>,
-  result? : string,
+  result? : string | number,
   selected?: boolean,
   setSelected? :  React.Dispatch<React.SetStateAction<boolean>>,
   colocarMonto? : boolean,

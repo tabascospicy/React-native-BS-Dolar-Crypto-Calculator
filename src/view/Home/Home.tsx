@@ -13,12 +13,16 @@ const Home : FC<props>  = ({name}) => {
   const {selected} = State;
  
   return (
-    <View style={styles.container}>
-      <Result />
-      {
-        selected ? <Card  /> : <List />
+    <View style={styles.container}> 
+    <StatusBar style="light" />
+    {
+        selected ? <Result />: <></>
       }
-      <StatusBar style="light" />
+      
+      {
+        selected ? <Card  />: <List />
+      }
+     
     </View>
   );
 }

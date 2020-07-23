@@ -6,6 +6,7 @@ import {
     Animated,
     Image,
     TouchableOpacity,
+    LayoutAnimation
 } from "react-native";
 import styles from "./style";
 import { props, GlobalState } from "interfaces/interfaces";
@@ -19,17 +20,22 @@ const Card: FC<props> = (props) => {
     const [selectedDestiny, setSelectedDestiny] = useState(new IndexPath(0));
     const [appear] = useState(new Animated.Value(0));
     //    let inputs : number = 0;
+    const [arrived,setArrived] = useState(false);
     const State: GlobalState = useContext(StateContext);
     const { selected,setSelected, setResult, supportedCoins, colocarMonto, origin, destiny, setDestiny } = State;
     const [selectedOrigin, setSelectedOrigin] = useState(supportedCoins && supportedCoins["USD"]);
     useEffect(() => {
-        Animated.timing(appear, {
+        
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.linear , ()=>{
+          Animated.timing(appear, {
             toValue: 1,
             useNativeDriver: true,
-            duration: 800,
+            duration:200,
         }).start();
-        const selectedName = Object.keys(supportedCoins)[origin];
-        setSelectedOrigin(supportedCoins[selectedName]);
+        });
+        setArrived(!arrived);
+        const selectedName = supportedCoins && Object.keys(supportedCoins)[origin];
+       supportedCoins &&  setSelectedOrigin(supportedCoins[selectedName]);
     }, []);
 
     /*useEffect(()=>{
@@ -50,9 +56,9 @@ const Card: FC<props> = (props) => {
     };
 
     const calculateAndSend = (amount: number) => {
-        let row = origin;
-        let key = `${Object.keys(supportedCoins)[row]}`;
-        let calculatedMount = supportedCoins[key]["Mount"] * amount;
+        let row  = origin && origin;
+        let key = `${supportedCoins && Object.keys(supportedCoins)[row]}`;
+        let calculatedMount = supportedCoins && supportedCoins[key]["Mount"] * amount;
         setDestiny &&  setDestiny((prev)=>selectedDestiny.row == 1 ? " Bs" : " $")
         setResult &&
             setResult((prev) =>
@@ -80,45 +86,38 @@ const Card: FC<props> = (props) => {
          setSelected &&  setSelected(false)
     }
     return (
-        <Animated.View style={[styles.container, { opacity: appear }]}>
-            <View style={styles.spacing}>
-                <TouchableOpacity onPress={handleBack}>
+        <Animated.View style={[styles.container, { opacity: 1,height : arrived ? "40%" :"0%",transform:[{translateY:appear.interpolate({inputRange:[0,1],outputRange:[300,0]})}]  }]}>
+            <Animated.View style={[styles.spacing,{opacity:appear}]}>
+                <TouchableOpacity style={styles.iconBox} onPress={handleBack}>
                     <AntDesign
-                        style={{ opacity: 0.8 }}
+                        style={{ opacity: 1 }}
                         name="caretleft"
                         size={24}
-                        color="white"
+                        color="black"
                     />
                 </TouchableOpacity>
                 <View style={styles.row}>
-                    <Text style={styles.titleFont}> Seleccionada</Text>
-                    <Text style={styles.titleFont}>
-                         
-                           <CoinSet Title={selectedOrigin && selectedOrigin["Title"]} />
-                        {selectedOrigin && ((selectedOrigin["Title"]=="BS") ? "USD" : selectedOrigin["Title"]) }     
-                    </Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.titleFont}> Tasa</Text>
-                    <Text style={[styles.titleFont,{width:"50%"}]}>
-                        {selectedOrigin && (selectedDestiny.row) ? selectedOrigin["BS"] : selectedOrigin && selectedOrigin["Mount"]} $
-                    </Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.titleFont}> Seleccione Destino</Text>
-                    <Select
+                  <View style={styles.row2}>
+                      <Text style={[styles.titleFont,styles.coin]}>
+                            <CoinSet Title={selectedOrigin && selectedOrigin["Title"]} />
+                          {selectedOrigin && ((selectedOrigin["Title"]=="BS") ? "USD" : selectedOrigin["Title"]) }     
+                      </Text>
+                      <Text style={[styles.titleFont,styles.coin]}>
+                          {selectedOrigin && (selectedDestiny.row) ? accounting.formatMoney(selectedOrigin["BS"],{symbol:destiny,thousand:',',decimal:'.'})   : selectedOrigin && accounting.formatMoney(selectedOrigin["Mount"],{symbol:destiny,thousand:',',decimal:'.'})} $
+                      </Text>
+                  </View>
+                  <Select
                         style={styles.select}
-                        value={["BS", "USD"][selectedDestiny.row]}
+                        value={["USD", "BS"][selectedDestiny.row]}
                         placeholder={"holi"}
                         selectedIndex={selectedDestiny}
                         onSelect={(index) => setSelectedDestiny(index)}
                     >
-                       {(selectedOrigin) && (selectedOrigin["Title"] !=="BS") && <SelectItem title={`USD`} />}
+                        <SelectItem title={`USD`} />
                         <SelectItem title={`BS`} />
                     </Select>
-                </View>
-                <View style={styles.inputRow}>
-                    <Text style={styles.titleFont}> Ingrese Monto</Text>
+                </View> 
+                <View style={[styles.row]}>
                     <TextInput
                         style={styles.inputMount}
                         placeholderTextColor="gray"
@@ -126,12 +125,11 @@ const Card: FC<props> = (props) => {
                         editable={colocarMonto}
                         onFocus={()=>setText((prev)=>"")}
                         clearButtonMode="while-editing"
-                        keyboardType={"numeric"}
+                        keyboardType={"number-pad"}
                         value={text}
                         onChange={(text) => sendChange(text.nativeEvent.text)}
-                    />
-                </View>
-            </View>
+                    /></View>
+            </Animated.View>
         </Animated.View>
     );
 };
