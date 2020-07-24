@@ -1,13 +1,4 @@
-type theme  = {
-    primary : string,
-    secondary : string,
-    warning : string,
-    info : string,
-    success : string,
-    light:string,
-    dark:string,
-    grey:string
-}
+import {theme} from "./../interfaces/interfaces";
 
 
 const Colors : theme = {

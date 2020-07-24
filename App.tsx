@@ -23,7 +23,6 @@ export default function App() {
     const [colocarMonto, setColocarMonto] = useState(false);
     const [notify, setNotify] = useState(false);
     const [lottie, setLottie] = useState(true);
-    const [listo,setListo] = useState(false);
     let [fontLoaded] = useFonts({
         Nunito: require("./src/assets/fonts/Nunito/Nunito-Regular.ttf"),
     });
@@ -43,6 +42,7 @@ export default function App() {
         setSelected,
         setDestiny,
         origin,
+        Colors,
         setOrigin,
     };
     //comienza la carga de las monedas soportadas
@@ -50,7 +50,6 @@ export default function App() {
         getCripto();
         const updateCoins = setInterval(() => {
             getCripto();
-            getPetro();
         }, 50000);
         return clearInterval(updateCoins);
     }, []);
@@ -98,16 +97,14 @@ export default function App() {
                     },
                     {}
                 );
-                setCoins((prev) => {
-                    return { ...prev, ...ordered };
-                }); 
-                getDolar(ordered["BTC"]["USD"]);
+                const acum = {...ordered}
+                getDolar(ordered["BTC"]["USD"],acum);
             })
             .catch((e) => {
                 console.log(e);
             });
     };
-    const getDolar = async (btc) => {
+    const getDolar = async (btc,acum) => {
         Dolar()
             .get("/ve/venezuela/transfers-with-specific-bank/.json")
             .then((response) => {
@@ -139,18 +136,16 @@ export default function App() {
                     },
                 };
 
-                setCoins((prev) => {
-                    return { ...prev, ...addCoins };
-                });
+                let acummulated = {...addCoins,...acum}
                 setDolarBS((prev) => parseFloat(dolar));
                 console.log("dolar", dolar);
-                getEuro(+promedio,dolar);
+                getEuro(+promedio,dolar,acummulated);
             })
             .catch((e) => {
                 console.log(e);
             });
     };
-    const getEuro = (bolivar,dolar) => {
+    const getEuro = (bolivar,dolar,acum) => {
         let prom = 0;
         Dolar()
             .get("/es/spain/.json")
@@ -170,16 +165,14 @@ export default function App() {
                 const addCoin: Coins = {
                     EUR: { Mount: prom,USD:parseFloat((euro/dolar).toFixed(4)), Title: "EUR", BS: euro },
                 };
-                setCoins((prev) => {
-                    return { ...prev, ...addCoin };
-                });
-                getPetro();
+                let acummulated = {...addCoin,acum}
+                getPetro(acummulated);
             })
             .catch((e) => {
                 console.log(e);
             });
     };
-    const getPetro = async () => {
+    const getPetro = async (acum) => {
         let data = {
             coins: ["USD", "PTR", "EUR"],
             fiats: ["BS", "USD", "EUR"],
@@ -196,7 +189,7 @@ export default function App() {
                     },
                 };
                 setCoins((prev) => {
-                    return { ...prev, ...addcoins };
+                    return { ...prev, ...addcoins,acum };
                 });
                 setFormated((prev) => false);
             })

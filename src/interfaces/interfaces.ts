@@ -3,6 +3,7 @@
       name?:string
   }
 export interface CoinType extends props {
+  [key:string] : any,
   keys?:number,
   Mount?:string | number,
   Title?:string,
@@ -35,8 +36,19 @@ export interface Coins {
 export interface CoinIcon {
       name? : string
 }
+export type theme  = {
+  primary : string,
+  secondary : string,
+  warning : string,
+  info : string,
+  success : string,
+  light:string,
+  dark:string,
+  grey:string
+}
 export interface GlobalState {
   "Bs"?: keyof Coins,
+  Colors? : theme,
   [key:string] : any,
   supportedCoins?:Coins,
   setSelectedCoin? : React.Dispatch<React.SetStateAction<{}>>,
