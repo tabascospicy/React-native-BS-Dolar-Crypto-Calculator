@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View,UIManager,Platform } from "react-native";
+import { View, UIManager, Platform } from "react-native";
 import Home from "./src/view/Home/Home";
+import ErrorMessage from "./src/components/ErrorMessage/ErrorMessage";
 import Colors from "./src/themes/colors";
 import { useFonts } from "expo-font";
 import { GlobalState } from "./src/interfaces/interfaces";
@@ -16,18 +17,16 @@ export default function App() {
     const [result, setResult] = useState<number>(0.0);
     const [selected, setSelected] = useState(false);
     const [colocarMonto, setColocarMonto] = useState(false);
-    const {coins , lottie,dolarBS,notify, setNotify} = useAskCoins();
+    const { ResetCall ,  error, coins, lottie, dolarBS, notify, setNotify } = useAskCoins();
 
     let [fontLoaded] = useFonts({
         Nunito: require("./src/assets/fonts/Nunito/Nunito-Regular.ttf"),
     });
-   
 
-
-    if (Platform.OS === 'android') {
-      if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-      }
+    if (Platform.OS === "android") {
+        if (UIManager.setLayoutAnimationEnabledExperimental) {
+            UIManager.setLayoutAnimationEnabledExperimental(true);
+        }
     }
 
     const GlobalValues: GlobalState = {
@@ -43,7 +42,7 @@ export default function App() {
         origin,
         Colors,
         setOrigin,
-        dolarBS
+        dolarBS,
     };
 
     const completeFont = () => {
@@ -51,24 +50,26 @@ export default function App() {
             <ApplicationProvider {...eva} theme={eva.light}>
                 <StateProvider.Provider value={{ ...GlobalValues }}>
                     <Home name="holi" />
-                    <UpdatedCoins visible={notify} setVisible={setNotify} />
+                    {error && <ErrorMessage ResetCall={ResetCall} />}
+                    <UpdatedCoins coins={coins} visible={notify} setVisible={setNotify} />
                 </StateProvider.Provider>
             </ApplicationProvider>
         );
     };
-
-
+ 
     return (
-        <View style={{ flex: 1, backgroundColor: Colors["primary"] }}>
-            {lottie ? (
-                <LottieView
-                    source={require("./src/assets/lottie/loading.json")}
-                    autoPlay
-                    loop
-                />
-            ) : (
-                completeFont()
-            )}
-        </View>
+       <View style={{ flex: 1, backgroundColor: Colors["primary"] }}>
+                {lottie ? (
+                    <LottieView
+                        source={require("./src/assets/lottie/loading.json")}
+                        autoPlay
+                        loop
+                    />
+                ) : (
+                    completeFont()
+                )
+             
+                }
+            </View>
     );
 }

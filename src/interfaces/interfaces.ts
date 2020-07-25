@@ -41,6 +41,8 @@ export type theme  = {
   secondary : string,
   warning : string,
   info : string,
+  white:string,
+  black:string,
   success : string,
   light:string,
   dark:string,

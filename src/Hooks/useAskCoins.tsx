@@ -1,44 +1,51 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Cripto from "./..//services/Cripto";
 import Petro from "./..//services/Petro";
 import Dolar from "./..//services/Dolar";
-import { Coins, GlobalState } from "./../interfaces/interfaces";
+import { Coins } from "./../interfaces/interfaces";
+
 const useAskCoins = () => {
     const [coins, setCoins] = useState<Coins>();
-    const [dolarBS, setDolarBS] = useState(0);
+    const [dolarBS] = useState(0);
     const [formated, setFormated] = useState(false);
     const [notify, setNotify] = useState(false);
     const [lottie, setLottie] = useState(true);
-
+    const [error,setError] = useState(false)
+    const ResetCall = () =>{
+      setLottie(true);
+      setError(false);
+      getCripto();
+    }
     useEffect(() => {
         getCripto();
         const updateCoins = setInterval(() => {
             getCripto();
-        }, 50000);
-        return clearInterval(updateCoins);
+        }, 60000);
+        return  ()=>clearInterval(updateCoins);
     }, []);
 
     useEffect(() => {
-        if (dolarBS && !formated) {
-            let agregarBS: Coins =
-                coins &&
-                Object.keys(coins).reduce((acum, element) => {
-                    !coins[element]["BS"]
-                        ? (acum[element] = {
-                              BS: coins[element]["USD"] * dolarBS,
-                              ...coins[element],
-                          })
-                        : (acum[element] = { ...coins[element] });
-                    return acum;
-                }, {});
-            console.log("finally", agregarBS);
-            setCoins((prev) => agregarBS);
-            setFormated(true);
-            setNotify(true);
-        } else if (formated) {
-            setLottie(false);
-        }
+      if(formated){
+        setLottie(false);
+      }
     }, [coins]);
+
+    const formatCoins = (Coins: Coins ) => {
+        let agregarBS: Coins =
+            Coins &&
+            Object.keys(Coins).reduce((acum, element) => {
+                !Coins[element]["BS"]
+                    ? (acum[element] = {
+                          BS: Coins[element]["USD"] * Coins["USD"]["BS"],
+                          ...Coins[element],
+                      })
+                    : (acum[element] = { ...Coins[element] });
+                return acum;
+            }, {});
+            setFormated(prev => true);
+        setCoins((prev) => agregarBS);
+    };
+
     const getCripto = async () => {
         Cripto()
             .get("/pricemulti?fsyms=BTC,ETH,DASH,DOGE,LTC&tsyms=USD")
@@ -46,6 +53,7 @@ const useAskCoins = () => {
                 const ordered = Object.keys(response.data).reduce(
                     (acum, element) => {
                         let pushcoin = response.data[element];
+                        
                         acum[element] = {
                             ...pushcoin,
                             Title: element,
@@ -60,6 +68,7 @@ const useAskCoins = () => {
                 getDolar(ordered["BTC"]["USD"], acum);
             })
             .catch((e) => {
+                setError(true);
                 console.log(e);
             });
     };
@@ -96,11 +105,10 @@ const useAskCoins = () => {
                 };
 
                 let acummulated = { ...addCoins, ...acum };
-                setDolarBS((prev) => parseFloat(dolar));
-                console.log("dolar", dolar);
                 getEuro(+promedio, parseFloat(dolar), acummulated);
             })
             .catch((e) => {
+                setError(true);
                 console.log(e);
             });
     };
@@ -129,10 +137,11 @@ const useAskCoins = () => {
                         BS: euro,
                     },
                 };
-                let acummulated = { ...addCoin, acum };
+                let acummulated = { ...addCoin, ...acum };
                 getPetro(acummulated);
             })
             .catch((e) => {
+                setError(true);
                 console.log(e);
             });
     };
@@ -152,15 +161,13 @@ const useAskCoins = () => {
                         BS: response.data.data["PTR"]["BS"],
                     },
                 };
-                setCoins((prev) => {
-                    return { ...prev, ...addcoins, acum };
-                });
-                setFormated((prev) => false);
+                formatCoins({ ...addcoins, ...acum });
             })
             .catch((e) => {
+                setError(true);
                 console.log(e);
             });
     };
-    return { coins, lottie, notify, dolarBS,setNotify };
+    return {ResetCall,error, coins:coins, lottie, notify, dolarBS, setNotify };
 };
 export default useAskCoins;

@@ -8,8 +8,7 @@
     "splash": {
       "image": "./src/assets/AFTIM.png",
       "resizeMode": "contain",
-      "heigth":"20",
-      "backgroundColor": "#162345"
+      "backgroundColor": "#FCFCFC"
     },
     "packagerOpts": {
       "config": "metro.config.js",

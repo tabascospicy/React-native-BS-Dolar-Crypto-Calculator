@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { Avatar, Button, Layout, Popover, Text } from '@ui-kitten/components';
+import { Layout, Popover, Text } from '@ui-kitten/components';
 import {Notifier} from "interfaces/interfaces";
-const UpdatedCoins :React.FC<Notifier> = ( {visible = false, setVisible}) => {
+const UpdatedCoins :React.FC<Notifier> = ( {visible = false, setVisible , coins}) => {
 
   useEffect(()=>{
     if(visible ==true){
      const disappear = setTimeout(()=>{
         setVisible(false);
       },2000)
-      return clearTimeout (disappear);
+      return ()=> clearTimeout(disappear);
     }
-  },[visible])
+  },[coins])
   return (
     <Popover
       visible={visible}
