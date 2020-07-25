@@ -13,8 +13,6 @@ import { props, GlobalState, CoinType } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import accounting from "accounting";
 import { Radio, RadioGroup } from "@ui-kitten/components";
-import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
-import style from "./style";
 import { AntDesign } from "@expo/vector-icons";
 const Card: FC<props> = ({ Toggle }) => {
     const [text, setText] = useState("0");
@@ -131,7 +129,7 @@ const Card: FC<props> = ({ Toggle }) => {
                                           thousand: ",",
                                           decimal: ".",
                                       }
-                                  )}{" "}
+                                  )}
                             $
                         </Text>
                     </View>

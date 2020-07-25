@@ -50,7 +50,7 @@ const style = StyleSheet.create({
     row2: {
         flex: 2,
         alignItems: "center",
-        justifyContent: "flex-start",
+        justifyContent: "center",
     },
     coin: {
         width: "100%",
