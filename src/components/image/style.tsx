@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const style = StyleSheet.create({
-  container:{
-    flex:1,
-    minWidth:100,
-  },
+  icon: {
+    width: 60,
+    height: 60,
+},
 })
 
 export default style;

@@ -1,21 +1,15 @@
 import React, { FC, useState, useContext, useEffect } from "react";
 import {
-    Text,
-    View,
-    TextInput,
     Animated,
     Image,
-    TouchableOpacity,
     LayoutAnimation,
 } from "react-native";
 import styles from "./style";
 import { props, GlobalState, CoinType } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
-import accounting from "accounting";
-import { Radio, RadioGroup } from "@ui-kitten/components";
-import { AntDesign } from "@expo/vector-icons";
+
+import Calculator from "./../Calculator/Calculator";
 const Card: FC<props> = ({ Toggle }) => {
-    const [text, setText] = useState("0");
     const [selectedDestiny, setSelectedDestiny] = useState(0);
     //    let inputs : number = 0;
     const [arrived, setArrived] = useState(false);
@@ -39,45 +33,11 @@ const Card: FC<props> = ({ Toggle }) => {
             setArrived(!arrived);
         });
 
-        const selectedName =
+        /*const selectedName =
             supportedCoins && Object.keys(supportedCoins)[origin];
-            supportedCoins && setSelectedOrigin(supportedCoins[selectedName]);
+            supportedCoins && setSelectedOrigin(supportedCoins[selectedName]);*/
         return () => cancelAnimationFrame(animation);
     }, []);
-
-    const sendChange = (text: string) => {
-        let toFormat = text;
-        if (text === "") {
-            setText((prev) => text);
-            setResult && setResult((prev) => 0);
-            return;
-        }
-        let spaces = toFormat.split("0");
-        const formated = parseFloat(text.split(",").join(""));
-        setText((prev) => text);
-
-        calculateAndSend(formated);
-    };
-
-    const calculateAndSend = (amount: number) => {
-        let row = origin && origin;
-        let key = `${supportedCoins && Object.keys(supportedCoins)[row]}`;
-        let calculatedMount =
-            supportedCoins && supportedCoins[key]["Mount"] * amount;
-        setDestiny &&
-            setDestiny((prev) => (selectedDestiny == 1 ? " Bs" : " $"));
-        setResult &&
-            setResult((prev) =>
-                selectedDestiny == 1
-                    ? calculatedMount * supportedCoins["Bs"]["BS"]
-                    : calculatedMount
-            );
-    };
-    useEffect(() => {
-        if (parseFloat(text.split(",").join("")) > 0) {
-            calculateAndSend(parseFloat(text.split(",").join("")));
-        }
-    }, [selectedDestiny]);
 
     return (
         <Animated.View
@@ -85,77 +45,14 @@ const Card: FC<props> = ({ Toggle }) => {
                 styles.container,
                 {
                     backgroundColor: Colors?.white,
-                    height: arrived ? "40%" : "2%",
+                    height: arrived ? "50%" : "2%",
                     minHeight: arrived ? 300 : 0,
                 },
             ]}
         >
-            <Animated.View style={[styles.spacing]}>
-                <TouchableOpacity style={[styles.iconBox]} onPress={Toggle}>
-                    <AntDesign
-                        style={{ opacity: 1 }}
-                        name="back"
-                        size={24}
-                        color="black"
-                    />
-                </TouchableOpacity>
-                <View
-                    style={[styles.row, { backgroundColor: Colors?.secondary }]}
-                >
-                    <View style={styles.row2}>
-                        <Text style={[styles.titleFont, styles.coin]}>
-                            <CoinSet
-                                Title={
-                                    selectedOrigin && selectedOrigin["Title"]
-                                }
-                            />
-                            {selectedOrigin &&
-                                (selectedOrigin["Title"] == "BS"
-                                    ? "USD"
-                                    : selectedOrigin["Title"])}
-                        </Text>
-                        <Text style={[styles.titleFont, styles.coin]}>
-                            {selectedOrigin && selectedDestiny
-                                ? accounting.formatMoney(selectedOrigin["BS"], {
-                                      symbol: destiny,
-                                      thousand: ",",
-                                      decimal: ".",
-                                  })
-                                : selectedOrigin &&
-                                  accounting.formatMoney(
-                                      selectedOrigin["Mount"],
-                                      {
-                                          symbol: destiny,
-                                          thousand: ",",
-                                          decimal: ".",
-                                      }
-                                  )}
-                            $
-                        </Text>
-                    </View>
-                    <RadioGroup
-                        selectedIndex={selectedDestiny}
-                        onChange={(index) => setSelectedDestiny(index)}
-                    >
-                        <Radio>USD</Radio>
-                        <Radio>BS</Radio>
-                    </RadioGroup>
-                </View>
-                <View
-                    style={[styles.row, { backgroundColor: Colors?.secondary }]}
-                >
-                    <TextInput
-                        style={styles.inputMount}
-                        clearTextOnFocus={true}
-                        onFocus={() => setText((prev) => "")}
-                        clearButtonMode="while-editing"
-                        keyboardType={"number-pad"}
-                        value={text}
-                        onChange={(text) => sendChange(text.nativeEvent.text)}
-                    />
-                </View>
-            </Animated.View>
+          <Calculator />
         </Animated.View>
+            
     );
 };
 

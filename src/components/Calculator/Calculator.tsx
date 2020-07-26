@@ -1,47 +1,96 @@
-import React, { FC } from "react";
+import React, { FC,useCallback,useContext,useState,useEffect } from "react";
 import {View, Text, TouchableOpacity } from "react-native";
 import styles from "./style";
 import Button from "./../Buttom/Buttom";
-import Colors from "./../../themes/colors";
-import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from '@expo/vector-icons'; 
+import {GlobalState} from "interfaces/interfaces";
+import StateContext from "./../../services/context";
+import { Radio, RadioGroup } from "@ui-kitten/components";
 const Calculator: FC = () => {
   let value = "";
+  const State: GlobalState = useContext(StateContext);
+    const {
+        Colors,
+        setResult,
+        supportedCoins,
+        origin,
+        setDestiny,
+        input,
+        setInput
+    } = State;
+
     const addNumber = (number:number) =>{
-      value = `${value}${number}`;
-      console.log(value);
+    
+     let value = (input == "0") ? `${number}` : `${input}${number}`;
+         setInput && setInput((prev) => value);
+     calculateAndSend(parseFloat(value));
     }
     const remove = ()=>{
-      let array = value.split("");
-      value = array.pop().join("");
-      console.log(value);
+      let array = input?.split("");
+      if(input === "0" || input===""){
+        value = "0";
+      }else{
+        array?.pop();
+        array && (value = array.join(""));
+      }
+      setInput && setInput((prev)=>value);
+      calculateAndSend(parseFloat(value))
     }
-  const Numbers = [1,2,3,4,5,6,7,8,9,0];
+
+    
+    const [selectedDestiny, setSelectedDestiny] = useState(0);
+    
+
+    const calculateAndSend = (amount: number) => {
+        let row = origin && origin;
+        let key = `${supportedCoins && Object.keys(supportedCoins)[row]}`;
+        let calculatedMount =
+            supportedCoins && supportedCoins[key]["Mount"] * amount;
+        setDestiny &&
+            setDestiny((prev) => (selectedDestiny == 1 ? " Bs" : " $"));
+        setResult &&
+            setResult((prev) =>
+                selectedDestiny == 1
+                    ? calculatedMount * supportedCoins["Bs"]["BS"]
+                    : calculatedMount
+            );
+    };
+    useEffect(() => {
+          input &&  calculateAndSend(parseFloat(input));
+    }, [selectedDestiny]);
+
+
+  const Numbers = [1,2,3,4,5,6,7,8,9];
     return (
       <View style={styles.container}>
           <View style={styles.buttonsRow}>
               <View style={styles.numbers}>
                   {Numbers.map((element,i)=>{
-                    <Button press={()=>addNumber(element)}>
-                      <Text style={[styles.number,{color:Colors?.light}]}>{element}</Text>
+                    return(
+                    <Button key={i} press={()=>addNumber(element)}>
+                      <Text style={[styles.number,{color:"#000"}]}>{element}</Text>
                     </Button>
+                    )
                   })}
-              </View>
-              <View style={styles.actions}>
-                  <Button press={()=>remove()}>
-                      <AntDesign
-                          style={{ opacity: 1 }}
-                          name="back"
-                          size={24}
-                          color="black"
-                      />
+                  <Button press={()=>console.log(0)}>
+                     <Text style={[styles.number,{color:"#000"}]}>.</Text>
+                  </Button>
+                   <Button press={()=>addNumber(0)}>
+                    <Text style={[styles.number,{color:"#000"}]}>0</Text>
+                  </Button>
+                   <Button press={()=>remove()}>
+                    <Entypo style={styles.number} name="erase" size={24} color="black" />
                   </Button>
               </View>
           </View>
-          <View style={styles.exchangeButton}>
-              <Button press={()=>console.log("no listo")}>
-                <Text>Intercambiar</Text>
-              </Button>
-          </View>
+          <RadioGroup
+                        style={styles.selectDestiny}
+                        selectedIndex={selectedDestiny}
+                        onChange={(index) => setSelectedDestiny(index)}
+                    >
+                        <Radio>USD</Radio>
+                        <Radio>BS</Radio>
+            </RadioGroup>
       </View>
     );
 };

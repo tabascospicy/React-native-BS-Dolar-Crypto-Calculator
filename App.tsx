@@ -15,6 +15,7 @@ export default function App() {
     const [origin, setOrigin] = useState(0);
     const [destiny, setDestiny] = useState(" $");
     const [result, setResult] = useState<number>(0.0);
+    const [input,setInput] = useState("0");
     const [selected, setSelected] = useState(false);
     const [colocarMonto, setColocarMonto] = useState(false);
     const { ResetCall ,  error, coins, lottie, dolarBS, notify, setNotify } = useAskCoins();
@@ -43,6 +44,8 @@ export default function App() {
         Colors,
         setOrigin,
         dolarBS,
+        input,
+        setInput
     };
 
     const completeFont = () => {

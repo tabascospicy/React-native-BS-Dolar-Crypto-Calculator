@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
       flex:1
     },
     numbers:{
-      flex:2,
+      flex:5,
       flexDirection:"row",
       justifyContent:"center",
-      alignItems:"center",
-      flexWrap:"wrap"
+      flexWrap:"wrap",
+      maxHeight:80,
     },
     actions:{
       flexDirection:"row",
@@ -31,6 +31,13 @@ const styles = StyleSheet.create({
         textAlign:"center",
         textAlignVertical:"center",
         fontSize:25,
+      },
+      selectDestiny:{
+          flex:1,
+          flexDirection:"row",
+          alignItems:"center",
+          justifyContent:"center",
+       //   maxHeight:120
       }
 })
 

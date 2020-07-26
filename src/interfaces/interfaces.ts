@@ -59,10 +59,15 @@ export interface GlobalState {
   setSelected? :  React.Dispatch<React.SetStateAction<boolean>>,
   colocarMonto? : boolean,
   destiny?:string,
+  input?:string | number,
+  setInput?:React.Dispatch<React.SetStateAction<string>>,
   setDestiny?:React.Dispatch<React.SetStateAction<string>>,
   origin?:number,
   setOrigin?:React.Dispatch<React.SetStateAction<number>>,
   setColocarMonto? : React.Dispatch<React.SetStateAction<boolean>>,
   setResult? : React.Dispatch<React.SetStateAction<number>>
+}
+export type Button  = {
+  press:Function
 }
  

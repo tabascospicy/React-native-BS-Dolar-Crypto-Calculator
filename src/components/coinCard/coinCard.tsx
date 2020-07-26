@@ -110,7 +110,6 @@ const Result: FC<CoinType> = ({
             style={[styles.container, { backgroundColor: Colors?.primary }]}
         >
            <>
-           {console.log(Title)}
                 <CoinSet />
                 <View style={styles.description}>
                     <Text style={[styles.FontTitle, { color: Colors?.light }]}>

@@ -5,8 +5,8 @@ import { CoinType } from "interfaces/interfaces";
 import accounting from "accounting";
 import StateContext from "./../../services/context";
 import { GlobalState } from "interfaces/interfaces";
-
-const Result: FC<CoinType> = () => {
+import CoinSet from "./../image/index";
+const Result: FC = ({image , mount,text,symbol="Bs "}) => {
     const State: GlobalState = useContext(StateContext);
     const { Colors ,supportedCoins } = State;
 
@@ -14,17 +14,14 @@ const Result: FC<CoinType> = () => {
         <View
             style={[styles.container, { backgroundColor: Colors?.secondary }]}
         >
-            <Image
-                source={require("./../../assets/icons/dollar.png")}
-                style={styles.icon}
-            />
+            <CoinSet style={styles.icon}   Title={image} />
             <View style={styles.description}>
                 <Text style={[styles.Title, { color: Colors?.light }]}>
-                      1 USD : 
+                      {text}
                 </Text>
             <Text style={[styles.Mount, { color: Colors?.light }]}>
-                   {supportedCoins && accounting.formatMoney(supportedCoins["USD"]["BS"] , {
-                        symbol: "Bs ",
+                   {supportedCoins && accounting.formatMoney(mount, {
+                        symbol: symbol,
                         thousand: ".",
                         decimal: ",",
                     })}

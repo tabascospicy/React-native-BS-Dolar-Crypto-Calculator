@@ -4,6 +4,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  iconBox: {
+    padding: 10,
+},
 });
 
 export default styles;
