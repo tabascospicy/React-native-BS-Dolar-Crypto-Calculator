@@ -123,12 +123,12 @@ const Result: FC<CoinType> = ({
                             decimal: ",",
                         })}
                     </Text>
-                 {Title !== "USD" && <Text style={[styles.FontMount, { color: Colors?.light }]}>USD :{accounting.formatMoney(USD, {
+                 {Title !== "USD" ? <Text style={[styles.FontMount, { color: Colors?.light }]}>USD :{accounting.formatMoney(USD, {
                             symbol: "$ ",
                             thousand: ".",
                             decimal: ",",
                             precision:4
-                        })}</Text>}   
+                        })}</Text> : <Text style={styles.FontMount}>USD : $1</Text>}   
                 </View>
           </>
         </TouchableHighlight>

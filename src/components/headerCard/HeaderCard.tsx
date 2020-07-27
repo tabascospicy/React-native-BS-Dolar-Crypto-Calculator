@@ -1,7 +1,6 @@
-import React, { FC, useContext } from "react";
-import { Text, Image, View } from "react-native";
+import React, { FC, useContext,useState} from "react";
+import { Text,  View } from "react-native";
 import styles from "./style";
-import { CoinType } from "interfaces/interfaces";
 import accounting from "accounting";
 import StateContext from "./../../services/context";
 import { GlobalState } from "interfaces/interfaces";
@@ -16,13 +15,10 @@ const Result: FC = ({
 }) => {
     const State: GlobalState = useContext(StateContext);
     const { Colors, supportedCoins } = State;
-    const general = {
-        symbol: symbol,
-        thousand: ",",
-        decimal: ".",
-        precision: 5,
-    };
 
+    const isDecimalInput = () => {
+      return mount.includes('.') ? mount : accounting.formatNumber(mount)
+    }
     return (
         <View
             style={[styles.container, { backgroundColor: Colors?.secondary }]}
@@ -33,7 +29,7 @@ const Result: FC = ({
                     {text}
                 </Text>
                 <Text style={[styles.Mount, { color: Colors?.light }]}>
-                    {supportedCoins && input ?  symbol  + mount :
+                    {supportedCoins && input ?  isDecimalInput() :
                         accounting.formatMoney(mount, {
                             symbol,
                             thousand: ",",

@@ -6,11 +6,12 @@ import { Entypo } from '@expo/vector-icons';
 import {GlobalState} from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import { Radio, RadioGroup } from "@ui-kitten/components";
+import accounting from "accounting";
 const Calculator: FC = () => {
   let value = "";
+  const [formated,setFormated] = useState("0");
   const State: GlobalState = useContext(StateContext);
     const {
-        Colors,
         setResult,
         supportedCoins,
         origin,
@@ -18,15 +19,16 @@ const Calculator: FC = () => {
         input,
         setInput
     } = State;
-
     const addNumber = (number:number) =>{
-    
      let value = (input == "0") ? `${number}` : `${input}${number}`;
+     value = value.includes('.') ? formated + `${number}` : value;
+     setFormated((prev)=> value.includes('.') ? value  : accounting.formatNumber(parseInt(value)));
      setInput && setInput((prev) => value);
      calculateAndSend(parseFloat(value));
     }
     const addDecimals = (decimal : string) =>{
-        let value =  (input?.toString().includes('.')) ? `${input}` : `${input}${decimal}`;
+        let value =  (input?.toString().includes('.')) ? `${formated}` : `${formated}${decimal}`;
+        setFormated(prev=>value)
         setInput && setInput((prev) => value);
         calculateAndSend(parseFloat(value));
     }
