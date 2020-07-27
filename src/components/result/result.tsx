@@ -16,8 +16,8 @@ const Result : FC<props>  = ({name}) => {
  
   return (
     <View style={styles.container}>
-      <HeaderCard text={"Resultado"} symbol={destiny} image={Object.keys(supportedCoins)[origin]} mount={result ? result:""}></HeaderCard>
-      <HeaderCard text={"Ingresado"} symbol={destiny} image={destiny?.split("").length==3 ? "BS" : "USD"} mount={input ? input :""}></HeaderCard>
+     {supportedCoins && Object.keys(supportedCoins)[origin ? origin : 0]==="USD" ? <HeaderCard text={"Resultado"} symbol={"Bs "} image={"BS" } mount={result ? result:""}></HeaderCard> : <HeaderCard text={"Resultado"} symbol={destiny} image={destiny?.split("").length==3 ? "BS" : "USD"} mount={result ? result:""}></HeaderCard>}
+      <HeaderCard input={true} text={"Ingresado"} symbol={"$"} image={supportedCoins && Object.keys(supportedCoins)[origin ? origin :0]} mount={input ? input :""}></HeaderCard>
     </View>
   );
 }

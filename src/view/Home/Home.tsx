@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import React, { FC, useEffect, useContext, useState } from "react";
+import React, { FC, useContext,} from "react";
 import styles from "./style";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import Result from "./../../components/result/result";
 import Card from "./../../components/card/card";
 import List from "./../../components/list/list";
@@ -41,7 +41,8 @@ const Home: FC<props> = ({ name }) => {
                         image={"USD"}
                         text={"1 USD :"}
                         mount={supportedCoins["USD"]["BS"]}
-                    ></HeaderCard>
+                    >
+                    </HeaderCard>
                     <List Toggle={Toggle} />
                 </>
             )}

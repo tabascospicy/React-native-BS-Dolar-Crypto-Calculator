@@ -21,7 +21,6 @@ const List: FC = () => {
                                 <CoinCard
                                     name={element}
                                     keys={i}
-                              
                                     {...value}
                                 />
                                 <View

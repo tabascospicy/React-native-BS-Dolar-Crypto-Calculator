@@ -26,6 +26,7 @@ const useAskCoins = () => {
 
     useEffect(() => {
       if(formated){
+        console.log(coins)
         setLottie(false);
       }
     }, [coins]);
@@ -131,7 +132,7 @@ const useAskCoins = () => {
                 let euro = parseFloat((bolivar / prom).toFixed(2));
                 const addCoin: Coins = {
                     EUR: {
-                        Mount: prom,
+                        Mount: parseFloat((euro / dolar).toFixed(4)) ,
                         USD: parseFloat((euro / dolar).toFixed(4)),
                         Title: "EUR",
                         BS: euro,
@@ -158,6 +159,7 @@ const useAskCoins = () => {
                         Mount: response.data.data["PTR"]["USD"],
                         Icon: "Icon",
                         Title: "PTR",
+                        USD:response.data.data["PTR"]["USD"],
                         BS: response.data.data["PTR"]["BS"],
                     },
                 };

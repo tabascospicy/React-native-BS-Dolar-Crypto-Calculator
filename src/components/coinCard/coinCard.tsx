@@ -8,6 +8,7 @@ import { GlobalState } from "interfaces/interfaces";
 const Result: FC<CoinType> = ({
     keys = 1,
     BS = "0,00",
+    USD = "0.00",
     Title = "USD",
     name = "USD",
 }) => {
@@ -122,6 +123,12 @@ const Result: FC<CoinType> = ({
                             decimal: ",",
                         })}
                     </Text>
+                 {Title !== "USD" && <Text style={[styles.FontMount, { color: Colors?.light }]}>USD :{accounting.formatMoney(USD, {
+                            symbol: "$ ",
+                            thousand: ".",
+                            decimal: ",",
+                            precision:4
+                        })}</Text>}   
                 </View>
           </>
         </TouchableHighlight>

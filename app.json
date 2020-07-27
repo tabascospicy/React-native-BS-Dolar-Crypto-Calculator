@@ -6,8 +6,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/AFTIM.png",
     "splash": {
-      "image": "./src/assets/AFTIM.png",
-      "resizeMode": "contain",
+      "image": "./src/assets/splash/AftimSplash.png",
       "backgroundColor": "#FCFCFC"
     },
     "packagerOpts": {

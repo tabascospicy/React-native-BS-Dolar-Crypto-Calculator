@@ -22,12 +22,17 @@ const Calculator: FC = () => {
     const addNumber = (number:number) =>{
     
      let value = (input == "0") ? `${number}` : `${input}${number}`;
-         setInput && setInput((prev) => value);
+     setInput && setInput((prev) => value);
      calculateAndSend(parseFloat(value));
+    }
+    const addDecimals = (decimal : string) =>{
+        let value =  (input?.toString().includes('.')) ? `${input}` : `${input}${decimal}`;
+        setInput && setInput((prev) => value);
+        calculateAndSend(parseFloat(value));
     }
     const remove = ()=>{
       let array = input?.split("");
-      if(input === "0" || input===""){
+      if(input == "0" || input==="" || input.length==1){
         value = "0";
       }else{
         array?.pop();
@@ -41,7 +46,7 @@ const Calculator: FC = () => {
     const [selectedDestiny, setSelectedDestiny] = useState(0);
     
 
-    const calculateAndSend = (amount: number) => {
+    const calculateAndSend = (amount: number | string) => {
         let row = origin && origin;
         let key = `${supportedCoins && Object.keys(supportedCoins)[row]}`;
         let calculatedMount =
@@ -72,7 +77,7 @@ const Calculator: FC = () => {
                     </Button>
                     )
                   })}
-                  <Button press={()=>console.log(0)}>
+                  <Button press={()=>addDecimals('.')}>
                      <Text style={[styles.number,{color:"#000"}]}>.</Text>
                   </Button>
                    <Button press={()=>addNumber(0)}>
@@ -83,14 +88,14 @@ const Calculator: FC = () => {
                   </Button>
               </View>
           </View>
-          <RadioGroup
+         {Object.keys(supportedCoins)[origin] !== "USD" && <RadioGroup
                         style={styles.selectDestiny}
                         selectedIndex={selectedDestiny}
                         onChange={(index) => setSelectedDestiny(index)}
                     >
-                        <Radio>USD</Radio>
-                        <Radio>BS</Radio>
-            </RadioGroup>
+                      <Radio>USD</Radio>  
+                      <Radio>BS</Radio>
+            </RadioGroup>}
       </View>
     );
 };
