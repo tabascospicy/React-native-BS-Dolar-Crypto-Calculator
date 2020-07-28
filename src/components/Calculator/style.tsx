@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
       },
       exchangeText:{
         fontWeight: "bold",
-        letterSpacing:2
+        letterSpacing:2,
       },
       containerInput:{
         flex:1,

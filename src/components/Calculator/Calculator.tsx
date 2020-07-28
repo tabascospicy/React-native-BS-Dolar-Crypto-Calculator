@@ -47,9 +47,9 @@ const Calculator: FC = () => {
                       <Radio>USD</Radio>  
                       <Radio>BS</Radio>
             </RadioGroup>} 
-            <Button style={styles.exchangeButton} press={invert}>
-                    <Text style={styles.exchangeText}   >Intercambiar</Text>
-                  </Button>
+            <Button style={[styles.exchange,{backgroundColor: Colors?.light}]} press={invert}>
+                <Text style={[styles.exchangeText,{color:Colors?.white}]}   >Intercambiar</Text>
+            </Button>
       </View>
     );
 };

@@ -52,8 +52,8 @@ const Card: FC<props> = (props) => {
         >
           <Calculator  />
           <TouchableOpacity style={[styles.iconBox]} onPress={back}>
-          <Text> {'< '}Back </Text>
-            </TouchableOpacity>
+          <Text> <Text style={{fontSize:20,fontWeight:"bold"}}>{'< '}</Text>Volver </Text>
+          </TouchableOpacity>
         </Animated.View>
             
     );

@@ -1,5 +1,5 @@
-import React, { FC, useContext, useEffect, useCallback,memo } from "react";
-import { View } from "react-native";
+import React, { FC, useContext,  useCallback,memo } from "react";
+import { View,Text } from "react-native";
 import styles from "./style";
 import { props, GlobalState } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
@@ -30,14 +30,14 @@ const Result: FC<props> = ({ name }) => {
         return supportedCoins &&
             originName === "USD" ? (
             <HeaderCard
-                text={"Resultado"}
+                text={"Al Cambio"}
                 symbol={"Bs "}
                 image={"BS"}
                 mount={calculatedValues.result ? calculatedValues.result : ""}
             ></HeaderCard>
         ) : (
             <HeaderCard
-                text={"Resultado"}
+                text={"Al Cambio"}
                 symbol={selectedDestiny ? "Bs " : "$ "}
                 image={inverted ? getSupportedCoin() : getBsDs()}
                 mount={calculatedValues.result ? calculatedValues.result : ""}
@@ -47,10 +47,11 @@ const Result: FC<props> = ({ name }) => {
 
     return (
         <View style={styles.container}>
+            <Text>{selectedDestiny ? supportedCoins[originName]["BS"] : supportedCoins[originName]["Mount"]}</Text>
             <WasDolarSelected />
             <HeaderCard
                 input={true}
-                text={"Ingresado"}
+                text={"Monto"}
                 symbol={"$"}
                 image={inverted ? getBsDs() : getSupportedCoin()}
                 mount={calculatedValues.input ? calculatedValues.input : ""}
