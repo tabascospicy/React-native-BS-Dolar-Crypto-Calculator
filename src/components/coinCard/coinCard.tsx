@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, useEffect, memo } from "react";
+import React, { FC, useContext, Fragment, memo , useRef, useEffect } from "react";
 import { Text, Animated, TouchableHighlight, Image, View } from "react-native";
 import styles from "./style";
 import { CoinType } from "interfaces/interfaces";
@@ -17,32 +17,33 @@ const Result: FC<CoinType> = ({
 }) => {
     const State: GlobalState = useContext(StateContext);
     const { setOrigin, Colors, setOriginName, lottie } = State;
-    console.log(lottie);
+    const arrived = useRef(false);
     const handleTouch = (key: number, name: string) => {
         setOrigin && setOrigin(key);
         setOriginName && setOriginName(name);
         props.navigation.navigate("Calculator");
     };
+    useEffect(()=>{
+      arrived.current = true;
+    },[lottie.current])
+    useEffect(()=>{
+      return ()=> arrived.current = false;
+    },[])
     return (
-        !(Title == "Bs") && (
+        !(Title === "Bs") && (
             <TouchableHighlight
                 activeOpacity={0.6}
                 underlayColor={Colors?.secondary}
                 onPress={() =>
-                    lottie ? handleTouch(keys, Title) : console.log("holi")
+                    lottie && handleTouch(keys, Title) 
                 }
                 style={[styles.container, { backgroundColor: Colors?.primary }]}
             >
-                {lottie ? (
-                    <>
-                        <Images Title={Title} style={styles.icon} />{" "}
+                {arrived.current ? (
+                    <Fragment>
+                        <Images Title={Title} style={styles.icon} />
                         <View style={styles.description}>
-                            <Text
-                                style={[
-                                    styles.FontTitle,
-                                    { color: Colors?.light },
-                                ]}
-                            >
+                            <Text style={[ styles.FontTitle, { color: Colors?.light }, ]}>
                                 {Title == "BS" ? "USD" : Title}
                             </Text>
                             <Text
@@ -76,7 +77,7 @@ const Result: FC<CoinType> = ({
                                 <Text style={styles.FontMount}>USD : $1</Text>
                             )}
                         </View>
-                    </>
+                    </Fragment>
                 ) : (
                     <LoadingCard />
                 )}

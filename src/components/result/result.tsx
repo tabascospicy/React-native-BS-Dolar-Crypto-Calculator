@@ -15,10 +15,6 @@ const Result: FC<props> = ({ name }) => {
         originName,
     } = State;
 
-    useEffect(() => {
-        
-        console.log(inverted)
-    }, [inverted]);
     const getBsDs = useCallback(() => {
         return selectedDestiny ? "BS" : "USD";
     }, [selectedDestiny,inverted]);

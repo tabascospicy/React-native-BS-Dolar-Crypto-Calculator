@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import  { useState, useEffect,useRef } from "react";
 import Cripto from "./..//services/Cripto";
 import Petro from "./..//services/Petro";
 import Dolar from "./..//services/Dolar";
@@ -7,12 +7,12 @@ import { Coins } from "./../interfaces/interfaces";
 const useAskCoins = () => {
     const [coins, setCoins] = useState<Coins>();
     const [dolarBS] = useState(0);
-    const [formated, setFormated] = useState(false);
+    const formated = useRef(false);
     const [notify, setNotify] = useState(false);
-    const [lottie, setLottie] = useState(false);
+    const lottie = useRef(false);
     const [error,setError] = useState(false)
     const ResetCall = () =>{
-      setLottie(true);
+      lottie.current = false;
       setError(false);
       getCripto();
     }
@@ -23,13 +23,6 @@ const useAskCoins = () => {
         }, 60000);
         return  ()=>clearInterval(updateCoins);
     }, []);
-
-    useEffect(() => {
-      if(formated){
-        console.log(coins)
-        setLottie(false);
-      }
-    }, [coins]);
 
     const formatCoins = (Coins: Coins ) => {
         let agregarBS: Coins =
@@ -43,7 +36,8 @@ const useAskCoins = () => {
                     : (acum[element] = { ...Coins[element] });
                 return acum;
             }, {});
-            setFormated(prev => true);
+        formated.current = true; 
+        lottie.current = true;
         setCoins((prev) => agregarBS);
     };
 

@@ -1,4 +1,4 @@
-import React, { FC,useContext,useState } from "react";
+import React, { FC,useContext,useEffect} from "react";
 import {View, Text} from "react-native";
 import styles from "./style";
 import Button from "./../Buttom/Buttom";
@@ -10,9 +10,11 @@ import { Radio, RadioGroup } from "@ui-kitten/components";
 import useCalculatedValues from "./../../Hooks/useCalculateValues";
 const Calculator: FC = () => {
   let value = "";
-  const {supportedCoins,origin}: GlobalState = useContext(StateContext);
-  const {invert,setSelectedDestiny,remove,addDecimals,addNumber,selectedDestiny} = useCalculatedValues();
-
+  const {supportedCoins,originName}: GlobalState = useContext(StateContext);
+  const {addCero,invert,setSelectedDestiny,remove,addDecimals,addNumber,selectedDestiny} = useCalculatedValues();
+  useEffect(()=>{
+    console.log(originName)
+  },[])
 
   const Numbers = [1,2,3,4,5,6,7,8,9];
     return (
@@ -29,7 +31,7 @@ const Calculator: FC = () => {
                   <Button style={styles.containerInput} press={addDecimals}>
                      <Text style={[styles.number,{color:"#000"}]}>.</Text>
                   </Button>
-                   <Button style={styles.containerInput} press={()=>addNumber(0)}>
+                   <Button style={styles.containerInput} press={()=>addCero()}>
                     <Text style={[styles.number,{color:"#000"}]}>0</Text>
                   </Button>
                    <Button style={styles.containerInput} press={remove}>
@@ -37,7 +39,7 @@ const Calculator: FC = () => {
                   </Button>
               </View>
           </View>
-         {Object.keys(supportedCoins)[origin] !== "USD" && <RadioGroup
+         {originName !== "USD" && <RadioGroup
                         style={styles.selectDestiny}
                         selectedIndex={selectedDestiny}
                         onChange={(index) => setSelectedDestiny(index)}
@@ -46,7 +48,7 @@ const Calculator: FC = () => {
                       <Radio>BS</Radio>
             </RadioGroup>} 
             <Button style={styles.exchangeButton} press={invert}>
-                    <Text style={styles.exchangeText}   >Exchange</Text>
+                    <Text style={styles.exchangeText}   >Intercambiar</Text>
                   </Button>
       </View>
     );

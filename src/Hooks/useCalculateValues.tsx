@@ -2,6 +2,7 @@ import {  useEffect, useContext, useRef,useCallback } from "react";
 import { GlobalState } from "interfaces/interfaces";
 import StateContext from "./../services/context";
 import accounting from "accounting";
+import result from "components/result/result";
 const useCalculateValues = () => {
     let value = "";
     const formated = useRef("0");
@@ -33,14 +34,15 @@ const useCalculateValues = () => {
     }, [calculatedValues]);
 
     useEffect(() => {
-        calculatedValues.input && calculateAndSend(calculatedValues.input);
+        calculatedValues.input && calculateAndSend(parseFloat(calculatedValues.input));
     }, [selectedDestiny]);
 
     useEffect(() => {
         calculateAndSend(calculatedValues.result);
-    }, [inverted]);
+    }, [inverted.current]);
 
     const addNumber = (number: number) => {
+     
         let value =
             calculatedValues.input == "0"
                 ? `${number}`
@@ -48,13 +50,21 @@ const useCalculateValues = () => {
         value = value.includes(".") ? formated.current + `${number}` : value;
         calculateAndSend(parseFloat(value));
     };
-
+    const addCero = ()=>{
+      let decimal = "0";
+        let value = `${calculatedValues.input}${decimal}`;
+        //calculateAndSend(parseFloat(value));
+        formated.current = value;
+        setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
+    }
     const addDecimals = () => {
         let decimal = ".";
         let value = calculatedValues.input?.toString().includes(".")
             ? `${formated.current}`
             : `${formated.current}${decimal}`;
-        calculateAndSend(parseFloat(value));
+        //calculateAndSend(parseFloat(value));
+        formated.current = value;
+        setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
     };
     const remove = () => {
         let array = calculatedValues.input?.toString().split("");
@@ -71,22 +81,23 @@ const useCalculateValues = () => {
         calculateAndSend(parseFloat(value));
     };
     const calculateResult = {
-      original: useCallback((amount)=>{return selectedDestiny == 1 ? supportedCoins[originName]["Mount"] * amount * supportedCoins["Bs"]["BS"] : supportedCoins[originName]["Mount"] * amount },[selectedDestiny,supportedCoins]),
-      inverted: useCallback((amount)=>{return selectedDestiny == 1 ? (supportedCoins[originName]["Mount"] / amount) / supportedCoins["Bs"]["BS"] :  amount  / supportedCoins[originName]["Mount"]  },[selectedDestiny,supportedCoins]),
+      original: useCallback((amount)=>{return selectedDestiny === 1 ? supportedCoins[originName]["Mount"] * amount * supportedCoins["Bs"]["BS"] : supportedCoins[originName]["Mount"] * amount },[selectedDestiny,supportedCoins,originName]),
+      inverted: useCallback((amount)=>{return selectedDestiny === 1 ? (supportedCoins[originName]["Mount"] / amount) / supportedCoins["Bs"]["BS"] :  amount  / supportedCoins[originName]["Mount"]  },[selectedDestiny,supportedCoins,originName]),
     }
     const calculateAndSend = (amount: number | string) => {
+      
         const calculated = inverted ?  calculateResult.inverted(amount):  calculateResult.original(amount) ;
-        
+        console.log(calculated , inverted)
         setCalculatedValues &&
             setCalculatedValues((prev) => {
                 return {
-                    result:calculated,
+                    result:calculated.toString(),
                     input:amount.toString()
                 };
             });
     };
     const invert = () => {
-      inverted.current = !inverted.current
+    setInverted &&  setInverted(!inverted);
     };
     useEffect(() => {
         calculatedValues &&
@@ -101,6 +112,7 @@ const useCalculateValues = () => {
         selectedDestiny,
         addDecimals,
         addNumber,
+        addCero
     };
 };
 

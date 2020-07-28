@@ -16,7 +16,7 @@ export default function App() {
     const [originName, setOriginName] = useState("USD");
     const [selectedDestiny, setSelectedDestiny] = useState(0);
     const { ResetCall ,  error, coins, lottie, notify, setNotify } = useAskCoins();
-    const inverted = useRef(false);
+    const [inverted,setInverted] = useState(false);
     const [calculatedValues,setCalculatedValues] = useState<CalculeValue>({input:"0",result:"0"});
 
     if (Platform.OS === "android") {
@@ -34,6 +34,7 @@ export default function App() {
         lottie,
         originName,
         setOriginName,
+        setInverted,
         calculatedValues,
         setCalculatedValues,
         selectedDestiny,

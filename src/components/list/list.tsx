@@ -15,7 +15,6 @@ const List: FC = (props) => {
             <ScrollView contentContainerStyle={styles.scrollView} >
                 { list.current.map((element, i: number) => {
                         let value = supportedCoins ? supportedCoins[element] : {Mount:"0.00" , BS:"0", USD:"0",name:"USD" };
-                        console.log(element)
                         return (
                             <Fragment key={i}>
                                 <CoinCard
