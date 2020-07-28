@@ -1,4 +1,4 @@
-import React, { FC, useContext,useState} from "react";
+import React, { FC, useContext,useCallback,memo} from "react";
 import { Text,  View } from "react-native";
 import styles from "./style";
 import accounting from "accounting";
@@ -16,9 +16,11 @@ const Result: FC = ({
     const State: GlobalState = useContext(StateContext);
     const { Colors, supportedCoins } = State;
 
-    const isDecimalInput = () => {
+    const isDecimalInput = useCallback(() => {
       return mount.includes('.') ? mount : accounting.formatNumber(mount)
-    }
+    },[mount])
+
+    
     return (
         <View
             style={[styles.container, { backgroundColor: Colors?.secondary }]}
@@ -41,4 +43,4 @@ const Result: FC = ({
         </View>
     );
 };
-export default Result;
+export default memo(Result);

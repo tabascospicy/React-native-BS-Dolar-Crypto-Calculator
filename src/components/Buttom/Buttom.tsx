@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC,memo } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import styles from "./style";
-const Buttom: FC = ({children,press}) => {
+const Buttom: FC = ({children,press, style}) => {
     return (
-      <TouchableOpacity style={styles.container} onPress={press}>
+      <TouchableOpacity  style={style} onPress={press}>
         {children}
       </TouchableOpacity>
     );
 };
-export default Buttom;
+export default memo(Buttom);

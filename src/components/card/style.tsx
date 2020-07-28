@@ -2,17 +2,17 @@ import { StyleSheet } from "react-native";
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
+      //  flex: 1,
         width: "100%",
         zIndex:1,
-        position: "absolute",
+        
+        position: "relative",
         bottom: 0,
-        minHeight: 280,
         borderTopEndRadius: 50,
         borderTopLeftRadius: 50,
-        justifyContent: "flex-start",
-      
-        //   maxHeight:500,
+        alignSelf:"flex-end",
+        //   maxHeight:100,
+        marginTop:"auto",
         backgroundColor: "white",
     },
     titleFont: {
@@ -85,6 +85,9 @@ const style = StyleSheet.create({
     },
     iconBox: {
         padding: 10,
+        position:"absolute",
+        bottom:0,
+        left:0
     },
 });
 

@@ -1,28 +1,23 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { View, UIManager, Platform } from "react-native";
 import Home from "./src/view/Home/Home";
 import ErrorMessage from "./src/components/ErrorMessage/ErrorMessage";
 import Colors from "./src/themes/colors";
 import { useFonts } from "expo-font";
-import { GlobalState } from "./src/interfaces/interfaces";
+import { StatusBar } from "expo-status-bar";
+import { GlobalState,CalculeValue } from "./src/interfaces/interfaces";
 import useAskCoins from "./src/Hooks/useAskCoins";
 import StateProvider from "./src/services/context";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import UpdatedCoins from "./src/components/PopOver/PopOver";
-import LottieView from "lottie-react-native";
 export default function App() {
     const [origin, setOrigin] = useState(0);
-    const [destiny, setDestiny] = useState(" $");
-    const [result, setResult] = useState<number>(0.0);
-    const [input,setInput] = useState("0");
-    const [selected, setSelected] = useState(false);
-    const [colocarMonto, setColocarMonto] = useState(false);
-    const { ResetCall ,  error, coins, lottie, dolarBS, notify, setNotify } = useAskCoins();
-
-    let [fontLoaded] = useFonts({
-        Nunito: require("./src/assets/fonts/Nunito/Nunito-Regular.ttf"),
-    });
+    const [originName, setOriginName] = useState("USD");
+    const [selectedDestiny, setSelectedDestiny] = useState(0);
+    const { ResetCall ,  error, coins, lottie, notify, setNotify } = useAskCoins();
+    const inverted = useRef(false);
+    const [calculatedValues,setCalculatedValues] = useState<CalculeValue>({input:"0",result:"0"});
 
     if (Platform.OS === "android") {
         if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -32,24 +27,20 @@ export default function App() {
 
     const GlobalValues: GlobalState = {
         supportedCoins: coins,
-        result,
-        setResult,
-        colocarMonto,
-        setColocarMonto,
-        destiny,
-        selected,
-        setSelected,
-        setDestiny,
         origin,
+        inverted,
         Colors,
         setOrigin,
-        dolarBS,
-        input,
-        setInput
+        lottie,
+        originName,
+        setOriginName,
+        calculatedValues,
+        setCalculatedValues,
+        selectedDestiny,
+        setSelectedDestiny
     };
-
-    const completeFont = () => {
-        return (
+    
+    return (
             <ApplicationProvider {...eva} theme={eva.light}>
                 <StateProvider.Provider value={{ ...GlobalValues }}>
                     <Home name="holi" />
@@ -58,21 +49,6 @@ export default function App() {
                 </StateProvider.Provider>
             </ApplicationProvider>
         );
-    };
  
-    return (
-       <View style={{ flex: 1, backgroundColor: Colors["primary"] }}>
-                {lottie ? (
-                    <LottieView
-                        source={require("./src/assets/lottie/loading.json")}
-                        autoPlay
-                        loop
-                    />
-                ) : (
-                    completeFont()
-                )
-             
-                }
-            </View>
-    );
+
 }

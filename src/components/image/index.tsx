@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext, useEffect } from "react";
+import React, { memo } from "react";
 import {
     Image,
 } from "react-native";
@@ -97,4 +97,4 @@ const CoinSet = ({Title ,style}) => {
           break;
   }
 };
-export default CoinSet;
+export default memo(CoinSet);

@@ -5,12 +5,13 @@ import { StyleSheet } from "react-native";
 const style = StyleSheet.create({
   container :{
     flex:1,
-    justifyContent:"flex-start",
-    alignItems:"center",
+    justifyContent:"center",
     flexDirection:"row",
-    maxHeight:170,
+    maxHeight:100,
+    flexWrap:"wrap",
     alignSelf:"flex-start",
-    padding:10,
+    paddingTop:40,
+    paddingLeft:20
   },
   image:{
     height:50,
@@ -18,7 +19,7 @@ const style = StyleSheet.create({
     borderRadius: 25
   },
   font : {
-    fontSize:30,
+    fontSize:23,
     fontWeight:"bold",
     padding:10,
     letterSpacing:2

@@ -1,51 +1,32 @@
-import { StatusBar } from "expo-status-bar";
-import React, { FC, useContext,} from "react";
+import React, { FC} from "react";
 import styles from "./style";
-import { View, TouchableOpacity, Text } from "react-native";
-import Result from "./../../components/result/result";
-import Card from "./../../components/card/card";
-import List from "./../../components/list/list";
-import { props, GlobalState } from "interfaces/interfaces";
-import HeaderCard from "./../../components/headerCard/HeaderCard";
-import StateContext from "./../../services/context";
+import { View} from "react-native";
+import { props} from "interfaces/interfaces";
 import NavBar from "./../../components/navBar/navBar";
-import { AntDesign } from "@expo/vector-icons";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import ShowList from "./Home/Home";
+import Calculator from "./Calculator/Calculator";
+const Stack = createStackNavigator();
+
 const Home: FC<props> = ({ name }) => {
-    const State: GlobalState = useContext(StateContext);
-    const { selected, setSelected, supportedCoins } = State;
-
-    const Toggle = () => {
-        setSelected && setSelected(!selected);
-    };
-
     return (
         <View style={styles.container}>
-            <StatusBar style="light" />
             <NavBar />
-            {selected ? (
-                <>
-                    <TouchableOpacity style={[styles.iconBox]} onPress={Toggle}>
-                        <AntDesign
-                            style={{ opacity: 1 }}
-                            name="back"
-                            size={24}
-                            color="black"
+            <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Home">
+                        <Stack.Screen
+                            options={{ headerShown: false }}
+                            name="Home"
+                            component={ShowList}
                         />
-                    </TouchableOpacity>
-                    <Result />
-                    <Card Toggle={Toggle} />
-                </>
-            ) : (
-                <>
-                    <HeaderCard
-                        image={"USD"}
-                        text={"1 USD :"}
-                        mount={supportedCoins["USD"]["BS"]}
-                    >
-                    </HeaderCard>
-                    <List Toggle={Toggle} />
-                </>
-            )}
+                        <Stack.Screen
+                            options={{ headerShown: false }}
+                            name="Calculator"
+                            component={Calculator}
+                        />
+                    </Stack.Navigator>
+                </NavigationContainer>
         </View>
     );
 };

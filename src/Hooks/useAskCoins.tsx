@@ -9,7 +9,7 @@ const useAskCoins = () => {
     const [dolarBS] = useState(0);
     const [formated, setFormated] = useState(false);
     const [notify, setNotify] = useState(false);
-    const [lottie, setLottie] = useState(true);
+    const [lottie, setLottie] = useState(false);
     const [error,setError] = useState(false)
     const ResetCall = () =>{
       setLottie(true);

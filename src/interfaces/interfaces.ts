@@ -48,25 +48,30 @@ export type theme  = {
   dark:string,
   grey:string
 }
-export interface GlobalState {
+export type GlobalState = {
   "Bs"?: keyof Coins,
   Colors? : theme,
   [key:string] : any,
+  inverted? : any,
   supportedCoins?:Coins,
-  setSelectedCoin? : React.Dispatch<React.SetStateAction<{}>>,
-  result? : string | number,
-  selected?: boolean,
-  setSelected? :  React.Dispatch<React.SetStateAction<boolean>>,
+  setInverted? :  React.Dispatch<React.SetStateAction<boolean>>,
   colocarMonto? : boolean,
   destiny?:string,
-  input?:string | number,
-  setInput?:React.Dispatch<React.SetStateAction<string>>,
   setDestiny?:React.Dispatch<React.SetStateAction<string>>,
   origin?:number,
   setOrigin?:React.Dispatch<React.SetStateAction<number>>,
+  originName?:string,
+  setCalculated?:React.Dispatch<React.SetStateAction<CalculeValue>>,
+  calculated?:CalculeValue,
+  setOriginName?:React.Dispatch<React.SetStateAction<string>>,
   setColocarMonto? : React.Dispatch<React.SetStateAction<boolean>>,
-  setResult? : React.Dispatch<React.SetStateAction<number>>
 }
+
+export interface CalculeValue  {
+    input:string,
+    result:string,
+}
+
 export type Button  = {
   press:Function
 }

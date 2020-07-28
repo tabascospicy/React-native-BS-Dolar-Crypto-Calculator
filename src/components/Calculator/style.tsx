@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
       flexDirection:"row",
       justifyContent:"center",
       flexWrap:"wrap",
-      maxHeight:80,
+      maxHeight:60,
     },
     actions:{
       flexDirection:"row",
@@ -38,7 +38,24 @@ const styles = StyleSheet.create({
           alignItems:"center",
           justifyContent:"center",
        //   maxHeight:120
-      }
+      },
+      exchange:{
+        flex:1,
+        alignSelf:"center",
+        alignItems:"center",
+        justifyContent:"center",
+        width:"50%",
+        maxHeight:50,
+        borderRadius:20
+      },
+      exchangeText:{
+        fontWeight: "bold",
+        letterSpacing:2
+      },
+      containerInput:{
+        flex:1,
+        minWidth:100,
+      },
 })
 
 export default styles;

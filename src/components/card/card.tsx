@@ -1,26 +1,25 @@
-import React, { FC, useState, useContext, useEffect } from "react";
+import React, { FC, useState, useContext, useEffect,memo } from "react";
 import {
     Animated,
     Image,
     LayoutAnimation,
+    TouchableOpacity,
+    Text
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 import styles from "./style";
 import { props, GlobalState, CoinType } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 
 import Calculator from "./../Calculator/Calculator";
-const Card: FC<props> = ({ Toggle }) => {
-    const [selectedDestiny, setSelectedDestiny] = useState(0);
+const Card: FC<props> = (props) => {
+   // const [selectedDestiny, setSelectedDestiny] = useState(0);
     //    let inputs : number = 0;
     const [arrived, setArrived] = useState(false);
     const State: GlobalState = useContext(StateContext);
     const {
         Colors,
-        setResult,
         supportedCoins,
-        origin,
-        destiny,
-        setDestiny,
     } = State;
     const [selectedOrigin, setSelectedOrigin] = useState(
         supportedCoins && supportedCoins["USD"]
@@ -38,19 +37,23 @@ const Card: FC<props> = ({ Toggle }) => {
             supportedCoins && setSelectedOrigin(supportedCoins[selectedName]);*/
         return () => cancelAnimationFrame(animation);
     }, []);
-
+    const back = () => {
+      props.navigation.goBack();
+    };
     return (
         <Animated.View
             style={[
                 styles.container,
                 {
                     backgroundColor: Colors?.white,
-                    height: arrived ? "50%" : "2%",
-                    minHeight: arrived ? 300 : 0,
-                },
+                    height: arrived ? "60%" : "2%",
+                }
             ]}
         >
-          <Calculator />
+          <Calculator  />
+          <TouchableOpacity style={[styles.iconBox]} onPress={back}>
+          <Text> {'< '}Back </Text>
+            </TouchableOpacity>
         </Animated.View>
             
     );
@@ -141,4 +144,4 @@ const CoinSet = (Title: CoinType) => {
     }
 };
 
-export default Card;
+export default memo(Card);
