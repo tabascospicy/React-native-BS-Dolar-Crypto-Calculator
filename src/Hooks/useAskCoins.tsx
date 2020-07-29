@@ -1,4 +1,4 @@
-import  { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Cripto from "./..//services/Cripto";
 import Petro from "./..//services/Petro";
 import Dolar from "./..//services/Dolar";
@@ -8,23 +8,40 @@ const useAskCoins = () => {
     const [coins, setCoins] = useState<Coins>();
     const [dolarBS] = useState(0);
     const formated = useRef(false);
+    const arrived = useRef(0);
+    const promedioBs = useRef("0");
+    const savedCoins = useRef({});
+    const promEuro = useRef(0);
     const [notify, setNotify] = useState(false);
     const lottie = useRef(false);
-    const [error,setError] = useState(false)
-    const ResetCall = () =>{
-      lottie.current = false;
-      setError(false);
-      getCripto();
-    }
+    const [error, setError] = useState(false);
+    const ResetCall = () => {
+        lottie.current = false;
+        setError(false);
+        getCripto();
+    };
+
+    useEffect(()=>{
+      lottie.current = true;
+      arrived.current = 0;
+    },[coins]);
+
     useEffect(() => {
         getCripto();
+        getDolar();
+        getPetro();
+        getEuro();
         const updateCoins = setInterval(() => {
             getCripto();
+            getDolar();
+            getPetro();
+            getEuro();
         }, 60000);
-        return  ()=>clearInterval(updateCoins);
+        return () => clearInterval(updateCoins);
     }, []);
 
-    const formatCoins = (Coins: Coins ) => {
+    const formatCoins = (Coins: Coins) => {
+      console.log(Coins,"coins");
         let agregarBS: Coins =
             Coins &&
             Object.keys(Coins).reduce((acum, element) => {
@@ -36,11 +53,41 @@ const useAskCoins = () => {
                     : (acum[element] = { ...Coins[element] });
                 return acum;
             }, {});
-        formated.current = true; 
+        formated.current = true;
         lottie.current = true;
         setCoins((prev) => agregarBS);
     };
-
+    const addValues = () => {
+        let dolar = parseFloat((
+            +promedioBs.current / savedCoins.current["BTC"]["USD"]
+        ).toFixed(2));
+        let euro = parseFloat((+promedioBs.current / promEuro.current).toFixed(2));
+        savedCoins.current = {...savedCoins.current,Bs:{
+            Mount: promedioBs.current,
+            BS: parseFloat(promedioBs.current),
+            USD: parseFloat(promedioBs.current),
+            Title: "Bs"}
+        };
+        savedCoins.current = { ...savedCoins.current, USD:{
+            Title: "USD",
+            Mount: dolar,
+            BS: dolar,}
+        };
+        savedCoins.current = {...savedCoins.current ,EUR:{
+          Mount: parseFloat((euro / dolar).toFixed(4)),
+          USD: parseFloat((euro / dolar).toFixed(4)),
+          Title: "EUR",
+          BS: euro,}
+        }
+    };
+    const checkCallStatus = (value) => {
+        arrived.current = ++arrived.current;
+        savedCoins.current = { ...savedCoins.current, ...value };
+        if (arrived.current >= 4) {
+            addValues();
+            formatCoins(savedCoins.current);
+        }
+    };
     const getCripto = async () => {
         Cripto()
             .get("/pricemulti?fsyms=BTC,ETH,DASH,DOGE,LTC&tsyms=USD")
@@ -48,7 +95,7 @@ const useAskCoins = () => {
                 const ordered = Object.keys(response.data).reduce(
                     (acum, element) => {
                         let pushcoin = response.data[element];
-                        
+
                         acum[element] = {
                             ...pushcoin,
                             Title: element,
@@ -59,15 +106,14 @@ const useAskCoins = () => {
                     },
                     {}
                 );
-                const acum = { ...ordered };
-                getDolar(ordered["BTC"]["USD"], acum);
+                checkCallStatus(ordered);
             })
             .catch((e) => {
                 setError(true);
                 console.log(e);
             });
     };
-    const getDolar = async (btc: number, acum: Coins) => {
+    const getDolar = async () => {
         Dolar()
             .get("/ve/venezuela/transfers-with-specific-bank/.json")
             .then((response) => {
@@ -81,33 +127,26 @@ const useAskCoins = () => {
                         devider++;
                     }
                 }
-                let promedio: string = (prom / devider).toFixed(2);
-
-                let dolar = (+promedio / btc).toFixed(2);
+                promedioBs.current = (prom / devider).toFixed(2);
 
                 const addCoins: Coins = {
                     Bs: {
                         Title: "Bs",
-                        Mount: promedio,
-                        BS: parseFloat(promedio),
-                        USD: parseFloat(promedio),
                     },
                     USD: {
                         Title: "USD",
-                        Mount: dolar,
-                        BS: parseFloat(dolar),
                     },
                 };
 
-                let acummulated = { ...addCoins, ...acum };
-                getEuro(+promedio, parseFloat(dolar), acummulated);
+                checkCallStatus(addCoins);
+                //  getEuro(+promedio, parseFloat(dolar), acummulated);
             })
             .catch((e) => {
                 setError(true);
                 console.log(e);
             });
     };
-    const getEuro = (bolivar: number, dolar: number, acum: Coins) => {
+    const getEuro = () => {
         let prom = 0;
         Dolar()
             .get("/es/spain/.json")
@@ -122,25 +161,20 @@ const useAskCoins = () => {
                         devider++;
                     }
                 }
-                prom = parseFloat((prom / devider).toFixed(2));
-                let euro = parseFloat((bolivar / prom).toFixed(2));
+                promEuro.current = parseFloat((prom / devider).toFixed(2));
                 const addCoin: Coins = {
                     EUR: {
-                        Mount: parseFloat((euro / dolar).toFixed(4)) ,
-                        USD: parseFloat((euro / dolar).toFixed(4)),
                         Title: "EUR",
-                        BS: euro,
                     },
                 };
-                let acummulated = { ...addCoin, ...acum };
-                getPetro(acummulated);
+                checkCallStatus(addCoin);
             })
             .catch((e) => {
                 setError(true);
                 console.log(e);
             });
     };
-    const getPetro = async (acum: Coins) => {
+    const getPetro = async () => {
         let data = {
             coins: ["USD", "PTR", "EUR"],
             fiats: ["BS", "USD", "EUR"],
@@ -153,17 +187,25 @@ const useAskCoins = () => {
                         Mount: response.data.data["PTR"]["USD"],
                         Icon: "Icon",
                         Title: "PTR",
-                        USD:response.data.data["PTR"]["USD"],
+                        USD: response.data.data["PTR"]["USD"],
                         BS: response.data.data["PTR"]["BS"],
                     },
                 };
-                formatCoins({ ...addcoins, ...acum });
+                checkCallStatus(addcoins);
             })
             .catch((e) => {
                 setError(true);
                 console.log(e);
             });
     };
-    return {ResetCall,error, coins:coins, lottie, notify, dolarBS, setNotify };
+    return {
+        ResetCall,
+        error,
+        coins: coins,
+        lottie,
+        notify,
+        dolarBS,
+        setNotify,
+    };
 };
 export default useAskCoins;
