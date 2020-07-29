@@ -41,7 +41,7 @@ const useAskCoins = () => {
     }, []);
 
     const formatCoins = (Coins: Coins) => {
-      console.log(Coins,"coins");
+     
         let agregarBS: Coins =
             Coins &&
             Object.keys(Coins).reduce((acum, element) => {
@@ -54,7 +54,6 @@ const useAskCoins = () => {
                 return acum;
             }, {});
         formated.current = true;
-        lottie.current = true;
         setCoins((prev) => agregarBS);
     };
     const addValues = () => {

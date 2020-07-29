@@ -17,46 +17,30 @@ const Result: FC<CoinType> = ({
 }) => {
     const State: GlobalState = useContext(StateContext);
     const { setOrigin, Colors, setOriginName, lottie } = State;
-    const arrived = useRef(false);
     const handleTouch = (key: number, name: string) => {
-        setOrigin && setOrigin(key);
+         setOrigin && setOrigin(key);
         setOriginName && setOriginName(name);
         props.navigation.navigate("Calculator");
     };
-    useEffect(()=>{
-      arrived.current = true;
-    },[lottie.current])
-    useEffect(()=>{
-      return ()=> arrived.current = false;
-    },[])
+
+    
     return (
         !(Title === "Bs") && (
             <TouchableHighlight
                 activeOpacity={0.6}
                 underlayColor={Colors?.secondary}
-                onPress={() =>
-                    lottie && handleTouch(keys, Title) 
-                }
+                disabled={!lottie.current}
+                onPress={() =>handleTouch(keys, Title)}
                 style={[styles.container, { backgroundColor: Colors?.primary }]}
             >
-                {arrived.current ? (
+              <Fragment>
+                
+                {lottie.current ? (
                     <Fragment>
                         <Images Title={Title} style={styles.icon} />
                         <View style={styles.description}>
                             <Text style={[ styles.FontTitle, { color: Colors?.light }, ]}>
                                 {Title == "BS" ? "USD" : Title}
-                            </Text>
-                            <Text
-                                style={[
-                                    styles.FontMount,
-                                    { color: Colors?.light },
-                                ]}
-                            >
-                                {accounting.formatMoney(BS, {
-                                    symbol: "Bs ",
-                                    thousand: ".",
-                                    decimal: ",",
-                                })}
                             </Text>
                             {Title !== "USD" ? (
                                 <Text
@@ -66,7 +50,7 @@ const Result: FC<CoinType> = ({
                                     ]}
                                 >
                                     USD :
-                                    {accounting.formatMoney(USD, {
+                                    {accounting.formatMoney(BS, {
                                         symbol: "$ ",
                                         thousand: ".",
                                         decimal: ",",
@@ -79,8 +63,8 @@ const Result: FC<CoinType> = ({
                         </View>
                     </Fragment>
                 ) : (
-                    <LoadingCard />
-                )}
+                    <LoadingCard ><Images Title={Title} style={[styles.icon,styles.iconLoad]} /></LoadingCard>
+                )}</Fragment>
             </TouchableHighlight>
         )
     );

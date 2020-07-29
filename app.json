@@ -41,7 +41,7 @@
     },
     "android": {
       "package": "com.somossistemas.AftimCalc",
-      "versionCode": 3
+      "versionCode": 5
     },
     "web": {
       "favicon": "./src/assets/icons/favicon.png"

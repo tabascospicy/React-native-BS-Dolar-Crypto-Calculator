@@ -34,6 +34,9 @@ const style = StyleSheet.create({
         height: 60,
         resizeMode: "contain",
     },
+    iconLoad:{
+      marginTop:20
+    }
 });
 
 export default style;
