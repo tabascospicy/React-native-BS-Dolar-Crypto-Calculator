@@ -12,3 +12,8 @@ posiblemente es debido a que componentes de la vista home estan siendo re render
 ##4 crear validacion para borrar values totalmente 0 ejemplo:(0.0000)
 el metodo parseFloat redondea estos numero a solo 0 por lo que al borrar uno solo de estos elimina toda la cadena
 se debe crear una validacion para que esto no pase
+
+
+##5 guardar los datos recividos de los request en el storage junto con la fecha de solicitud
+
+esto para leerlos al iniciar la app y la carga de datos se ha mas rapido la fecha para mostrar una notificacion en un intervalo de al menos 1 dia de que los datos presentados son viejos
