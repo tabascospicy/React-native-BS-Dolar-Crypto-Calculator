@@ -1,9 +1,11 @@
-import React, { FC, useContext,  useCallback,memo } from "react";
-import { View,Text } from "react-native";
+import React, { FC, useContext, useCallback, memo } from "react";
+import { View, Text } from "react-native";
 import styles from "./style";
 import { props, GlobalState } from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import Colors from "./../../themes/colors";
+import { AntDesign } from '@expo/vector-icons'; 
+import accounting from "accounting";
 import HeaderCard from "./../headerCard/HeaderCard";
 const Result: FC<props> = ({ name }) => {
     const State: GlobalState = useContext(StateContext);
@@ -17,18 +19,18 @@ const Result: FC<props> = ({ name }) => {
 
     const getBsDs = useCallback(() => {
         return selectedDestiny ? "BS" : "USD";
-    }, [selectedDestiny,inverted]);
+    }, [selectedDestiny, inverted]);
 
     const getSupportedCoin = useCallback(() => {
-        return supportedCoins && supportedCoins[originName ? originName : 0]["Title"];
-    }, [originName,inverted]);
-
-    
+        return (
+            supportedCoins &&
+            supportedCoins[originName ? originName : 0]["Title"]
+        );
+    }, [originName, inverted]);
 
     //retorna un component Header card no editable quiere decir que solo tiene una opcion de destino disponible
     const WasDolarSelected = () => {
-        return supportedCoins &&
-            originName === "USD" ? (
+        return supportedCoins && originName === "USD" ? (
             <HeaderCard
                 text={"Al Cambio"}
                 symbol={"Bs "}
@@ -47,7 +49,21 @@ const Result: FC<props> = ({ name }) => {
 
     return (
         <View style={styles.container}>
-            <Text>{selectedDestiny ? supportedCoins[originName]["BS"] : supportedCoins[originName]["Mount"]}</Text>
+            <Text style={styles.coinValue}>
+              
+                {originName} =
+                {accounting.formatMoney(
+                    selectedDestiny
+                        ? supportedCoins[originName]["BS"]
+                        : supportedCoins[originName]["Mount"],
+                    {
+                        symbol: selectedDestiny ? "Bs " : "$ ",
+                        thousand: ",",
+                        decimal: ".",
+                        precision: 5,
+                    }
+                )}
+            </Text>
             <WasDolarSelected />
             <HeaderCard
                 input={true}

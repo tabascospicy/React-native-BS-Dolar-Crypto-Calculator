@@ -8,13 +8,12 @@ import {GlobalState} from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import { Radio, RadioGroup } from "@ui-kitten/components";
 import useCalculatedValues from "./../../Hooks/useCalculateValues";
+import { AntDesign } from '@expo/vector-icons'; 
 const Calculator: FC = () => {
   let value = "";
-  const {supportedCoins,originName}: GlobalState = useContext(StateContext);
+  const {originName}: GlobalState = useContext(StateContext);
   const {addCero,invert,setSelectedDestiny,remove,addDecimals,addNumber,selectedDestiny} = useCalculatedValues();
-  useEffect(()=>{
-    console.log(originName)
-  },[])
+  
 
   const Numbers = [1,2,3,4,5,6,7,8,9];
     return (
@@ -44,11 +43,14 @@ const Calculator: FC = () => {
                         selectedIndex={selectedDestiny}
                         onChange={(index) => setSelectedDestiny(index)}
                     >
-                      <Radio>USD</Radio>  
-                      <Radio>BS</Radio>
+                      <Radio style={styles.padd}>USD</Radio>  
+                      <Radio style={styles.padd}>BS</Radio>
             </RadioGroup>} 
             <Button style={[styles.exchange,{backgroundColor: Colors?.light}]} press={invert}>
-                <Text style={[styles.exchangeText,{color:Colors?.white}]}   >Intercambiar</Text>
+                <Text style={[styles.exchangeText,{color:Colors?.white}]}   >
+                  Calcular
+                  <AntDesign  name="retweet" size={20} color="white" />
+                </Text>
             </Button>
       </View>
     );

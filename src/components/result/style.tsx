@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import Colors from "./../../themes/colors";
 const style = StyleSheet.create({
   container:{
    flex:1,
@@ -9,6 +9,12 @@ const style = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center",
   },
+  coinValue:{
+    fontSize:20,
+    padding:10,
+    color:Colors.light,
+    fontWeight:"bold",
+  }
 })
 
   

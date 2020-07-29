@@ -42,31 +42,37 @@ const useCalculateValues = () => {
     }, [inverted.current]);
 
     const addNumber = (number: number) => {
-     
-        let value =
+     requestAnimationFrame(()=>{
+       let value =
             calculatedValues.input == "0"
                 ? `${number}`
                 : `${calculatedValues.input}${number}`;
         value = value.includes(".") ? formated.current + `${number}` : value;
         calculateAndSend(parseFloat(value));
+     })
     };
     const addCero = ()=>{
-      let decimal = "0";
+      requestAnimationFrame(()=>{
+        let decimal = "0";
         let value = `${calculatedValues.input}${decimal}`;
         //calculateAndSend(parseFloat(value));
         formated.current = value;
         setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
+      })
     }
     const addDecimals = () => {
-        let decimal = ".";
+      requestAnimationFrame(()=>{
+         let decimal = ".";
         let value = calculatedValues.input?.toString().includes(".")
             ? `${formated.current}`
             : `${formated.current}${decimal}`;
         //calculateAndSend(parseFloat(value));
         formated.current = value;
         setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
+      })
     };
     const remove = () => {
+      requestAnimationFrame(()=>{
         let array = calculatedValues.input?.toString().split("");
         if (
             calculatedValues.input == "0" ||
@@ -79,6 +85,7 @@ const useCalculateValues = () => {
             array && (value = array.join(""));
         }
         calculateAndSend(parseFloat(value));
+      })
     };
     const calculateResult = {
       original: useCallback((amount)=>{return selectedDestiny === 1 ? supportedCoins[originName]["Mount"] * amount * supportedCoins["Bs"]["BS"] : supportedCoins[originName]["Mount"] * amount },[selectedDestiny,supportedCoins,originName]),
@@ -87,7 +94,6 @@ const useCalculateValues = () => {
     const calculateAndSend = (amount: number | string) => {
       
         const calculated = inverted ?  calculateResult.inverted(amount):  calculateResult.original(amount) ;
-        console.log(calculated , inverted)
         setCalculatedValues &&
             setCalculatedValues((prev) => {
                 return {

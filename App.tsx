@@ -3,8 +3,6 @@ import { View, UIManager, Platform } from "react-native";
 import Home from "./src/view/Home/Home";
 import ErrorMessage from "./src/components/ErrorMessage/ErrorMessage";
 import Colors from "./src/themes/colors";
-import { useFonts } from "expo-font";
-import { StatusBar } from "expo-status-bar";
 import { GlobalState,CalculeValue } from "./src/interfaces/interfaces";
 import useAskCoins from "./src/Hooks/useAskCoins";
 import StateProvider from "./src/services/context";

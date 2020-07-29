@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
       selectDestiny:{
           flex:1,
           flexDirection:"row",
+          
           alignItems:"center",
           justifyContent:"center",
        //   maxHeight:120
@@ -51,11 +52,18 @@ const styles = StyleSheet.create({
       exchangeText:{
         fontWeight: "bold",
         letterSpacing:2,
+        fontSize:20
       },
       containerInput:{
         flex:1,
         minWidth:100,
       },
+      rotateIcon:{
+        transform:[{rotateX:"100deg"}]
+      },
+      padd:{
+        padding:10,
+      }
 })
 
 export default styles;
