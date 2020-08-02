@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import {  View, TouchableHighlight ,Text} from "react-native";
 import styles from "./style";
-import Colors from "./../../themes/colors";
+import Colors from "themes/colors";
 const ErrorMessage: FC = ({ResetCall}) => {
 
     return (

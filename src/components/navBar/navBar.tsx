@@ -2,7 +2,7 @@ import React, {FC,useContext} from 'react';
 import { View,Image,Text } from 'react-native';
 import styles from "./style"
 import {GlobalState} from "interfaces/interfaces";
-import StateContext from "./../../services/context";
+import StateContext from "services/context";
 const NavBar : FC  = () => {
 
 const State : GlobalState  = useContext(StateContext);

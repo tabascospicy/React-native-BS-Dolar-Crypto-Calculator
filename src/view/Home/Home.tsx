@@ -2,11 +2,11 @@ import React, { FC} from "react";
 import styles from "./style";
 import { View} from "react-native";
 import { props} from "interfaces/interfaces";
-import NavBar from "./../../components/navBar/navBar";
+import NavBar from "components/navBar/navBar";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer , DarkTheme } from "@react-navigation/native";
 import ShowList from "./Home/Home";
-import Colors from "./../../themes/colors";
+import Colors from "themes/colors";
 import Calculator from "./Calculator/Calculator";
 const Stack = createStackNavigator();
 const theme = {

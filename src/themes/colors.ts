@@ -1,4 +1,4 @@
-import {theme} from "./../interfaces/interfaces";
+import {theme} from "../interfaces/interfaces";
 
 const prove = {
   primary : "#091945",

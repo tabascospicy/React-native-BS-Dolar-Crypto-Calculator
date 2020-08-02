@@ -2,9 +2,9 @@ import React, { FC, useContext,useCallback,memo} from "react";
 import { Text,  View } from "react-native";
 import styles from "./style";
 import accounting from "accounting";
-import StateContext from "./../../services/context";
+import StateContext from "services/context";
 import { GlobalState } from "interfaces/interfaces";
-import CoinSet from "./../image/index";
+import CoinSet from "components/image/index";
 const Result: FC = ({
     image,
     mount,

@@ -1,13 +1,12 @@
 import React, { FC,useContext,useEffect} from "react";
 import {View, Text} from "react-native";
 import styles from "./style";
-import Button from "./../Buttom/Buttom";
+import Button from "components/Buttom/Buttom";
 import { Entypo } from '@expo/vector-icons'; 
-import Colors from "./../../themes/colors";
+import Colors from "themes/colors";
 import {GlobalState} from "interfaces/interfaces";
-import StateContext from "./../../services/context";
-import { Radio, RadioGroup } from "@ui-kitten/components";
-import useCalculatedValues from "./../../Hooks/useCalculateValues";
+import StateContext from "services/context";
+import useCalculatedValues from "Hooks/useCalculateValues";
 import { AntDesign } from '@expo/vector-icons'; 
 const Calculator: FC = () => {
   let value = "";
@@ -38,14 +37,6 @@ const Calculator: FC = () => {
                   </Button>
               </View>
           </View>
-         {(!(originName === "USD") && !(originName === "USDBCV")) && <RadioGroup
-                        style={styles.selectDestiny}
-                        selectedIndex={selectedDestiny}
-                        onChange={(index) => setSelectedDestiny(index)}
-                    >
-                      <Radio style={styles.padd}>USD</Radio>  
-                      <Radio style={styles.padd}>BS</Radio>
-            </RadioGroup>} 
             <Button style={[styles.exchange,{backgroundColor: Colors?.secondary}]} press={invert}>
                 <Text style={[styles.exchangeText,{color:Colors?.white}]}   >
                   Calcular

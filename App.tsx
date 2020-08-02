@@ -6,9 +6,6 @@ import { GlobalState, CalculeValue } from "./src/interfaces/interfaces";
 import useAskCoins from "./src/Hooks/useAskCoins";
 import Colors from "./src/themes/colors";
 import StateProvider from "./src/services/context";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider } from "@ui-kitten/components";
-import UpdatedCoins from "./src/components/PopOver/PopOver";
 export default function App() {
     const [origin, setOrigin] = useState(0);
     const [originName, setOriginName] = useState("USD");
@@ -51,20 +48,12 @@ export default function App() {
 
     return (
       <View style={{flex:1,backgroundColor:Colors.strong}}>
-        <ApplicationProvider {...eva} theme={eva.dark}>
             
            
                 <StateProvider.Provider value={{ ...GlobalValues }}>
                     <Home name="holi" />
                     {error && <ErrorMessage ResetCall={ResetCall} />}
-                    <UpdatedCoins
-                        coins={coins}
-                        visible={notify}
-                        setVisible={setNotify}
-                    />
                 </StateProvider.Provider>
-          
-        </ApplicationProvider>
         </View>
     );
 }

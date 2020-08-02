@@ -2,9 +2,9 @@ import React, { FC, useState, useContext, useEffect,memo } from "react";
 import {Animated,LayoutAnimation,} from "react-native";
 import styles from "./style";
 import { props, GlobalState, } from "interfaces/interfaces";
-import StateContext from "./../../services/context";
+import StateContext from "services/context";
 
-import Calculator from "./../Calculator/Calculator";
+import Calculator from "components/Calculator/Calculator";
 const Card: FC<props> = (props) => {
 
     const [arrived, setArrived] = useState(false);

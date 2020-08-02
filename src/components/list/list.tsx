@@ -3,8 +3,8 @@ import { View, SafeAreaView, ScrollView } from "react-native";
 import styles from "./style";
 
 import { GlobalState } from "interfaces/interfaces";
-import CoinCard from "./../coinCard/coinCard";
-import StateContext from "./../../services/context";
+import CoinCard from "components/coinCard/coinCard";
+import StateContext from "services/context";
 const List: FC = (props) => {
     const State: GlobalState = useContext(StateContext);
 

@@ -2,11 +2,11 @@ import React, { FC, useContext, useCallback, memo } from "react";
 import { View, Text } from "react-native";
 import styles from "./style";
 import { props, GlobalState } from "interfaces/interfaces";
-import StateContext from "./../../services/context";
-import Colors from "./../../themes/colors";
+import StateContext from "services/context";
+import Colors from "themes/colors";
 import { AntDesign } from '@expo/vector-icons'; 
 import accounting from "accounting";
-import HeaderCard from "./../headerCard/HeaderCard";
+import HeaderCard from "components/headerCard/HeaderCard";
 const Result: FC<props> = ({ name }) => {
     const State: GlobalState = useContext(StateContext);
     const {

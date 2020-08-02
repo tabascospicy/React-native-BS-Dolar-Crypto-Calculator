@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import Cripto from "./..//services/Cripto";
-import Petro from "./..//services/Petro";
-import Dolar from "./..//services/Dolar";
-import { Coins } from "./../interfaces/interfaces";
+import Cripto from "services/Cripto";
+import Petro from "services/Petro";
+import Dolar from "services/Dolar";
+import { Coins } from "interfaces/interfaces";
 
 const useAskCoins = () => {
     const [coins, setCoins] = useState<Coins>();
