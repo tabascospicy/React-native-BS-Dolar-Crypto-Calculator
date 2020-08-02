@@ -1,17 +1,21 @@
 import { StyleSheet } from "react-native";
-
+import Colors from "./../../themes/colors";
 
 
 const style = StyleSheet.create({
   container :{
     flex:1,
-    justifyContent:"center",
+    justifyContent:"flex-start",
     flexDirection:"row",
     maxHeight:100,
     flexWrap:"wrap",
     alignSelf:"flex-start",
     paddingTop:40,
-    paddingLeft:20
+    width:"100%",
+    paddingLeft:20,
+    backgroundColor:Colors.light,
+    borderBottomWidth:1,
+    borderBottomColor:Colors.strong,
   },
   image:{
     height:50,

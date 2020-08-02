@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-// import Colors from "themes/colors";
+ import Colors from "./../../themes/colors";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
   iconBox: {
     padding: 10,
 },
+color:{
+  backgroundColor:Colors.primary
+}
 });
 
 export default styles;

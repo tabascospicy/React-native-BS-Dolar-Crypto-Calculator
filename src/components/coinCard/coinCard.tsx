@@ -34,23 +34,22 @@ const Result: FC<CoinType> = ({
                 style={[styles.container, { backgroundColor: Colors?.primary }]}
             >
               <Fragment>
-                
                 {lottie.current ? (
                     <Fragment>
                         <Images Title={Title} style={styles.icon} />
                         <View style={styles.description}>
-                            <Text style={[ styles.FontTitle, { color: Colors?.light }, ]}>
-                                {Title == "BS" ? "USD" : Title}
+                            <Text style={[ styles.FontTitle, { color: Colors?.font }, ]}>
+                                {Title == "USD" ? "Dolar libre" : Title== "USDBCV" ? "Dolar Oficial (BCV)" : Title}
                             </Text>
-                            {Title !== "USD" ? (
+                            {Title !== "USD" && Title !== "USDBCV"  ? (
                                 <Text
                                     style={[
                                         styles.FontMount,
-                                        { color: Colors?.light },
+                                        { color: Colors?.font },
                                     ]}
                                 >
                                     USD :
-                                    {accounting.formatMoney(BS, {
+                                    {accounting.formatMoney(USD, {
                                         symbol: "$ ",
                                         thousand: ".",
                                         decimal: ",",
@@ -58,7 +57,14 @@ const Result: FC<CoinType> = ({
                                     })}
                                 </Text>
                             ) : (
-                                <Text style={styles.FontMount}>USD : $1</Text>
+                            <Text style={[styles.FontMount, { color: Colors?.font }]}>Bs : 
+                            {accounting.formatMoney(BS, {
+                                        symbol: "$ ",
+                                        thousand: ".",
+                                        decimal: ",",
+                                        precision: 2,
+                                    })}
+                            </Text>
                             )}
                         </View>
                     </Fragment>

@@ -1,10 +1,10 @@
-import React, { useState,useRef } from "react";
-import { View, UIManager, Platform } from "react-native";
+import React, { useState } from "react";
+import { UIManager, Platform,View } from "react-native";
 import Home from "./src/view/Home/Home";
 import ErrorMessage from "./src/components/ErrorMessage/ErrorMessage";
-import Colors from "./src/themes/colors";
-import { GlobalState,CalculeValue } from "./src/interfaces/interfaces";
+import { GlobalState, CalculeValue } from "./src/interfaces/interfaces";
 import useAskCoins from "./src/Hooks/useAskCoins";
+import Colors from "./src/themes/colors";
 import StateProvider from "./src/services/context";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
@@ -13,9 +13,19 @@ export default function App() {
     const [origin, setOrigin] = useState(0);
     const [originName, setOriginName] = useState("USD");
     const [selectedDestiny, setSelectedDestiny] = useState(0);
-    const { ResetCall ,  error, coins, lottie, notify, setNotify } = useAskCoins();
-    const [inverted,setInverted] = useState(false);
-    const [calculatedValues,setCalculatedValues] = useState<CalculeValue>({input:"0",result:"0"});
+    const {
+        ResetCall,
+        error,
+        coins,
+        lottie,
+        notify,
+        setNotify,
+    } = useAskCoins();
+    const [inverted, setInverted] = useState(false);
+    const [calculatedValues, setCalculatedValues] = useState<CalculeValue>({
+        input: "0",
+        result: "0",
+    });
 
     if (Platform.OS === "android") {
         if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -36,18 +46,25 @@ export default function App() {
         calculatedValues,
         setCalculatedValues,
         selectedDestiny,
-        setSelectedDestiny
+        setSelectedDestiny,
     };
-    
+
     return (
-            <ApplicationProvider {...eva} theme={eva.light}>
+      <View style={{flex:1,backgroundColor:Colors.strong}}>
+        <ApplicationProvider {...eva} theme={eva.dark}>
+            
+           
                 <StateProvider.Provider value={{ ...GlobalValues }}>
                     <Home name="holi" />
                     {error && <ErrorMessage ResetCall={ResetCall} />}
-                    <UpdatedCoins coins={coins} visible={notify} setVisible={setNotify} />
+                    <UpdatedCoins
+                        coins={coins}
+                        visible={notify}
+                        setVisible={setNotify}
+                    />
                 </StateProvider.Provider>
-            </ApplicationProvider>
-        );
- 
-
+          
+        </ApplicationProvider>
+        </View>
+    );
 }

@@ -189,7 +189,15 @@ const useAskCoins = () => {
                         USD: response.data.data["PTR"]["USD"],
                         BS: response.data.data["PTR"]["BS"],
                     },
+                    USDBCV:{
+                      Mount: response.data.data["USD"]["BS"],
+                      Icon: "Icon",
+                      Title: "USDBCV",
+                      USD: response.data.data["USD"],
+                      BS: response.data.data["USD"]["BS"],
+                    }
                 };
+                console.log(addcoins,"coins", response.data.data)
                 checkCallStatus(addcoins);
             })
             .catch((e) => {

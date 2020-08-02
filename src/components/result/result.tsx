@@ -60,7 +60,7 @@ const Result: FC<props> = ({ name }) => {
                         symbol: selectedDestiny ? "Bs " : "$ ",
                         thousand: ",",
                         decimal: ".",
-                        precision: 5,
+                        precision:selectedDestiny ? 0 : 5,
                     }
                 )}
             </Text>

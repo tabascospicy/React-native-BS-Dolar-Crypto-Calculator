@@ -25,7 +25,7 @@ const Card: FC<props> = (props) => {
             style={[
                 styles.container,
                 {
-                    backgroundColor: Colors?.white,
+                    backgroundColor: Colors?.strong,
                     height: arrived ? "60%" : "2%",
                 }
             ]}

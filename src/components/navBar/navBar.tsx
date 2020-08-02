@@ -12,7 +12,7 @@ const {supportedCoins,Colors} = State;
   return (
     <View style={styles.container}>
       <Image source={require("./../../assets/AFTIM.png")} style={styles.image}/>
-      <Text style={[styles.font,{color:Colors?.light}]}>Aftim Calculator</Text>
+      <Text style={[styles.font,{color:Colors?.font}]}>Aftim Cotiza</Text>
     </View>
   );
 }
