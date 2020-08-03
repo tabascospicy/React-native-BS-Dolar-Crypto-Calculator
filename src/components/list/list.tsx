@@ -9,7 +9,8 @@ const List: FC = (props) => {
     const State: GlobalState = useContext(StateContext);
 
     const { supportedCoins, Colors } = State;
-    const list = useRef(["USD" , "Bs" , "PTR" , "DOGE", "ETH", "DASH" , "BTC" , "EUR" , "LTC" , "PTR"]);
+    //colocar USD BCV y USD AFtim
+    const list = useRef(["USD" ,"USDBCV", "Bs" , "BTC" ,"ETH", "DOGE",  "DASH" , "EUR" , "LTC" , "PTR"]);
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView} >
@@ -28,7 +29,7 @@ const List: FC = (props) => {
                           
                                     style={[
                                         styles.separator,
-                                        { backgroundColor: Colors?.light },
+                                        { backgroundColor: Colors?.strong },
                                     ]}
                                 ></View>
                             </Fragment>

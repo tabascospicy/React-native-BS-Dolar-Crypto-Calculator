@@ -14,7 +14,7 @@ const Result: FC = ({
     input = false,
 }) => {
     const State: GlobalState = useContext(StateContext);
-    const { Colors, supportedCoins } = State;
+    const { Colors, supportedCoins , selectedDestiny, } = State;
 
     const isDecimalInput = useCallback(() => {
       return mount.includes('.') ? mount : accounting.formatNumber(mount)
@@ -23,20 +23,20 @@ const Result: FC = ({
     
     return (
         <View
-            style={[styles.container, { backgroundColor: Colors?.secondary }]}
+            style={[styles.container, { backgroundColor: Colors?.strong }]}
         >
             <CoinSet style={styles.icon} Title={image} />
             <View style={styles.description}>
-                <Text style={[styles.Title, { color: Colors?.light }]}>
+                <Text style={[styles.Title, { color: Colors?.font }]}>
                     {text}
                 </Text>
-                <Text style={[styles.Mount, { color: Colors?.light }]}>
+                <Text style={[styles.Mount, { color: Colors?.font }]}>
                     {supportedCoins && input ?  isDecimalInput() :
                         accounting.formatMoney(mount, {
                             symbol,
                             thousand: ",",
                             decimal: ".",
-                            precision: 5,
+                            precision: selectedDestiny ? 2 : 5,
                         })}
                 </Text>
             </View>

@@ -1,35 +1,13 @@
 {
-  "expo": {
-    "name": "Aftim-Calc",
-    "slug": "Aftim-Calc",
-    "version": "1.0.0",
+  "name": "AftimCalcula",
+  "displayName": "AftimCalcula",
+  "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/AFTIM.png",
     "splash": {
-      "image": "./src/assets/splash/AftimSplash.png",
+      "image": "./src/assets/splash/AftimCalculaSplash.png",
       "backgroundColor": "#FCFCFC"
     },
-    "packagerOpts": {
-      "config": "metro.config.js",
-      "sourceExts": [
-        "expo.ts",
-        "expo.tsx",
-        "expo.js",
-        "expo.jsx",
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "wasm",
-        "svg"
-      ]
-    },
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -40,11 +18,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.somossistemas.AftimCalc",
-      "versionCode": 5
-    },
-    "web": {
-      "favicon": "./src/assets/icons/favicon.png"
+      "package": "com.aftimcotiza",
+      "versionCode": 1
     }
-  }
 }

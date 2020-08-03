@@ -6,7 +6,9 @@ import result from "components/result/result";
 const useCalculateValues = () => {
     let value = "";
     const formated = useRef("0");
+    const BCV = useRef(false);
     const State: GlobalState = useContext(StateContext);
+
     const {
         calculatedValues,
         setCalculatedValues,
@@ -19,6 +21,9 @@ const useCalculateValues = () => {
     } = State;
     
     useEffect(() => {
+      if(originName?.toString() === "USDBCV"){
+        setInverted && setInverted(true);
+      }
         return () => { 
           setSelectedDestiny && setSelectedDestiny(0);
           setInverted && setInverted(false);

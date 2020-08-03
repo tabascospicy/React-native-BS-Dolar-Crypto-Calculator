@@ -1,5 +1,5 @@
-import React, { FC, useContext, Fragment, memo , useRef, useEffect } from "react";
-import { Text, Animated, TouchableHighlight, Image, View } from "react-native";
+import React, { FC, useContext, Fragment, memo , useEffect } from "react";
+import { Text, TouchableHighlight,  View } from "react-native";
 import styles from "./style";
 import { CoinType } from "interfaces/interfaces";
 import accounting from "accounting";
@@ -23,42 +23,47 @@ const Result: FC<CoinType> = ({
         props.navigation.navigate("Calculator");
     };
 
-    
     return (
         !(Title === "Bs") && (
             <TouchableHighlight
                 activeOpacity={0.6}
                 underlayColor={Colors?.secondary}
-                disabled={!lottie.current}
+                disabled={!lottie}
                 onPress={() =>handleTouch(keys, Title)}
                 style={[styles.container, { backgroundColor: Colors?.primary }]}
             >
               <Fragment>
-                
-                {lottie.current ? (
+                {lottie ? (
                     <Fragment>
                         <Images Title={Title} style={styles.icon} />
                         <View style={styles.description}>
-                            <Text style={[ styles.FontTitle, { color: Colors?.light }, ]}>
-                                {Title == "BS" ? "USD" : Title}
+                            <Text style={[ styles.FontTitle, { color: Colors?.font }, ]}>
+                                {Title == "USD" ? "Dolar libre" : Title== "USDBCV" ? "Dolar Oficial (BCV)" : Title}
                             </Text>
-                            {Title !== "USD" ? (
+                            {Title !== "USD" && Title !== "USDBCV"  ? (
                                 <Text
                                     style={[
                                         styles.FontMount,
-                                        { color: Colors?.light },
+                                        { color: Colors?.font },
                                     ]}
                                 >
                                     USD :
-                                    {accounting.formatMoney(BS, {
-                                        symbol: "$ ",
+                                    {accounting.formatMoney(USD, {
+                                        symbol: "",
                                         thousand: ".",
                                         decimal: ",",
                                         precision: 4,
                                     })}
                                 </Text>
                             ) : (
-                                <Text style={styles.FontMount}>USD : $1</Text>
+                            <Text style={[styles.FontMount, { color: Colors?.font }]}>Bs : 
+                            {accounting.formatMoney(BS, {
+                                        symbol: "",
+                                        thousand: ".",
+                                        decimal: ",",
+                                        precision: 2,
+                                    })}
+                            </Text>
                             )}
                         </View>
                     </Fragment>

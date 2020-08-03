@@ -90,8 +90,8 @@ const CoinSet = ({Title ,style}) => {
       default:
           return (
               <Image
-                  source={require("./../../assets/icons/bs.png")}
-                  style={style ? style : styles.icon}
+                  source={require("./../../assets/icons/BCV.jpeg")}
+                  style={[style ? style : styles.icon,styles.bcv]}
               />
           );
           break;

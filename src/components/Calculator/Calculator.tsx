@@ -2,13 +2,13 @@ import React, { FC,useContext,useEffect} from "react";
 import {View, Text} from "react-native";
 import styles from "./style";
 import Button from "./../Buttom/Buttom";
-import { Entypo } from '@expo/vector-icons'; 
 import Colors from "./../../themes/colors";
 import {GlobalState} from "interfaces/interfaces";
 import StateContext from "./../../services/context";
 import { Radio, RadioGroup } from "@ui-kitten/components";
 import useCalculatedValues from "./../../Hooks/useCalculateValues";
-import { AntDesign } from '@expo/vector-icons'; 
+import Icon from 'react-native-vector-icons/AntDesign'; 
+import Back from 'react-native-vector-icons/Entypo';
 const Calculator: FC = () => {
   let value = "";
   const {originName}: GlobalState = useContext(StateContext);
@@ -23,22 +23,22 @@ const Calculator: FC = () => {
                   {Numbers.map((element,i)=>{
                     return(
                     <Button style={styles.containerInput} key={i} press={()=>addNumber(element)}>
-                      <Text style={[styles.number,{color:"#000"}]}>{element}</Text>
+                      <Text style={[styles.number,{color:Colors.font}]}>{element}</Text>
                     </Button>
                     )
                   })}
                   <Button style={styles.containerInput} press={addDecimals}>
-                     <Text style={[styles.number,{color:"#000"}]}>.</Text>
+                     <Text style={[styles.number,{color:Colors.font}]}>.</Text>
                   </Button>
                    <Button style={styles.containerInput} press={()=>addCero()}>
-                    <Text style={[styles.number,{color:"#000"}]}>0</Text>
+                    <Text style={[styles.number,{color:Colors.font}]}>0</Text>
                   </Button>
                    <Button style={styles.containerInput} press={remove}>
-                    <Entypo style={styles.number} name="erase" size={24} color="black" />
+                   <Back style={styles.number} name="erase" size={24} color={`${Colors?.font}`} />
                   </Button>
               </View>
           </View>
-         {originName !== "USD" && <RadioGroup
+         {(!(originName === "USD") && !(originName === "USDBCV")) && <RadioGroup
                         style={styles.selectDestiny}
                         selectedIndex={selectedDestiny}
                         onChange={(index) => setSelectedDestiny(index)}
@@ -46,10 +46,10 @@ const Calculator: FC = () => {
                       <Radio style={styles.padd}>USD</Radio>  
                       <Radio style={styles.padd}>BS</Radio>
             </RadioGroup>} 
-            <Button style={[styles.exchange,{backgroundColor: Colors?.light}]} press={invert}>
+            <Button style={[styles.exchange,{backgroundColor: Colors?.secondary}]} press={invert}>
                 <Text style={[styles.exchangeText,{color:Colors?.white}]}   >
                   Calcular
-                  <AntDesign  name="retweet" size={20} color="white" />
+                  <Icon  name="retweet" size={20} color={`${Colors?.font}`} />
                 </Text>
             </Button>
       </View>

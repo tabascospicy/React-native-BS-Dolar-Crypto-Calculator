@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import Colors from "./../../themes/colors";
 const styles = StyleSheet.create({
     container:{
       flex:1,
@@ -46,8 +46,17 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         width:"50%",
+
         maxHeight:50,
-        borderRadius:20
+        borderRadius:20,
+        shadowColor: Colors.secondary,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       },
       exchangeText:{
         fontWeight: "bold",

@@ -18,6 +18,12 @@ const Result: FC<props> = ({ name }) => {
     } = State;
 
     const getBsDs = useCallback(() => {
+      if(originName ==="USD" && inverted){
+            return "BS"
+      }
+      if(originName==="USD" && !inverted){
+        return "BS"
+      }
         return selectedDestiny ? "BS" : "USD";
     }, [selectedDestiny, inverted]);
 
@@ -34,14 +40,14 @@ const Result: FC<props> = ({ name }) => {
             <HeaderCard
                 text={"Al Cambio"}
                 symbol={"Bs "}
-                image={"BS"}
+                image={inverted ? getSupportedCoin() : getBsDs()}
                 mount={calculatedValues.result ? calculatedValues.result : ""}
             ></HeaderCard>
         ) : (
             <HeaderCard
                 text={"Al Cambio"}
                 symbol={selectedDestiny ? "Bs " : "$ "}
-                image={inverted ? getSupportedCoin() : getBsDs()}
+                image={(originName ==="USDBCV") ?  (inverted)  ?  getBsDs()  :  getSupportedCoin() : inverted ? getSupportedCoin() : getBsDs()}
                 mount={calculatedValues.result ? calculatedValues.result : ""}
             ></HeaderCard>
         );
@@ -57,10 +63,10 @@ const Result: FC<props> = ({ name }) => {
                         ? supportedCoins[originName]["BS"]
                         : supportedCoins[originName]["Mount"],
                     {
-                        symbol: selectedDestiny ? "Bs " : "$ ",
+                        symbol: "",
                         thousand: ",",
                         decimal: ".",
-                        precision: 5,
+                        precision: originName==="USD" || originName==="Bs" || originName==="USDBCV" ?  2  : 5,
                     }
                 )}
             </Text>
@@ -69,7 +75,7 @@ const Result: FC<props> = ({ name }) => {
                 input={true}
                 text={"Monto"}
                 symbol={"$"}
-                image={inverted ? getBsDs() : getSupportedCoin()}
+                image={(originName ==="USDBCV") ?  (inverted)  ?  getSupportedCoin()  : getBsDs()  : inverted ? getBsDs() : getSupportedCoin()}
                 mount={calculatedValues.input ? calculatedValues.input : ""}
             ></HeaderCard>
         </View>
