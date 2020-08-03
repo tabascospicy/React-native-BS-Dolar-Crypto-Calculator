@@ -5,6 +5,9 @@ const style = StyleSheet.create({
     width: 60,
     height: 60,
 },
+bcv:{
+  borderRadius:40
+}
 })
 
 export default style;

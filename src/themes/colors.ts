@@ -7,7 +7,7 @@ const prove = {
   info : "grey",
   success : "blue",
   light:"#0d1e4c",
-  strong:"#162654",
+  strong:"#1a2a56",
   white:"#ffff",
   black:"#00000",
   font:"#ffff",

@@ -1,5 +1,11 @@
-const { getDefaultConfig } = require('metro-config');
+/**
+ * Metro configuration for React Native
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
+<<<<<<< HEAD
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts },
@@ -14,3 +20,15 @@ module.exports = (async () => {
     },
   };
 })();
+=======
+module.exports = {
+  transformer: {
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: false,
+      },
+    }),
+  },
+};
+>>>>>>> e77e554ad034175d04625d701c1c28358601ee0e

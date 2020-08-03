@@ -33,14 +33,14 @@ const Calculator: FC = () => {
                     <Text style={[styles.number,{color:Colors.font}]}>0</Text>
                   </Button>
                    <Button style={styles.containerInput} press={remove}>
-                    <Entypo style={styles.number} name="erase" size={24} color={`${Colors?.font}`}  />
+                   <Back style={styles.number} name="erase" size={24} color={`${Colors?.font}`} />
                   </Button>
               </View>
           </View>
             <Button style={[styles.exchange,{backgroundColor: Colors?.secondary}]} press={invert}>
                 <Text style={[styles.exchangeText,{color:Colors?.white}]}   >
                   Calcular
-                  <AntDesign  name="retweet" size={20} color={`${Colors?.font}`} />
+                  <Icon  name="retweet" size={20} color={`${Colors?.font}`} />
                 </Text>
             </Button>
       </View>

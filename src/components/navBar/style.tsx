@@ -8,7 +8,9 @@ const style = StyleSheet.create({
     justifyContent:"flex-start",
     flexDirection:"row",
     maxHeight:100,
+    position:"relative",
     flexWrap:"wrap",
+    alignItems:"center",
     alignSelf:"flex-start",
     paddingTop:40,
     width:"100%",
@@ -27,6 +29,12 @@ const style = StyleSheet.create({
     fontWeight:"bold",
     padding:10,
     letterSpacing:2
+  },
+  icon:{
+   position:"absolute",
+   right:0,
+   paddingTop:30,
+   paddingRight:40,
   }
 })
 export default style;
