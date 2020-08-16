@@ -1,14 +1,13 @@
-import {  useEffect, useContext, useRef,useCallback } from "react";
+import {  useEffect, useContext, useRef,useCallback, useState} from "react";
 import { GlobalState } from "interfaces/interfaces";
-import StateContext from "./../services/context";
+import StateContext from "services/context";
 import accounting from "accounting";
 import result from "components/result/result";
 const useCalculateValues = () => {
     let value = "";
     const formated = useRef("0");
-    const BCV = useRef(false);
     const State: GlobalState = useContext(StateContext);
-
+    
     const {
         calculatedValues,
         setCalculatedValues,
@@ -17,11 +16,16 @@ const useCalculateValues = () => {
         originName,
         setInverted,
         selectedDestiny, 
-        setSelectedDestiny
+        setSelectedDestiny,
+        colors
     } = State;
-    
+    const [, updateState] = useState();
+    const originalFunction  = useCallback((amount)=>{ return selectedDestiny == 1 ? supportedCoins[originName]["Mount"] * amount * supportedCoins["Bs"]["BS"] : supportedCoins[originName]["Mount"] * amount },[originName,selectedDestiny]);
+    const invertedFunction = useCallback((amount)=>{ return selectedDestiny == 1 ? ( amount / supportedCoins[originName]["Mount"]) / supportedCoins["Bs"]["BS"] :  amount  / supportedCoins[originName]["Mount"]  },[originName,selectedDestiny]);
+  const calculateFunction = useRef(originalFunction)
+
     useEffect(() => {
-      if(originName?.toString() === "USDBCV"){
+      if(originName?.toString() === "USDBCV" ||originName?.toString() === "USD" ){
         setInverted && setInverted(true);
       }
         return () => { 
@@ -39,44 +43,52 @@ const useCalculateValues = () => {
     }, [calculatedValues]);
 
     useEffect(() => {
+      calculateFunction.current = inverted ? invertedFunction : originalFunction
         calculatedValues.input && calculateAndSend(parseFloat(calculatedValues.input));
     }, [selectedDestiny]);
 
     useEffect(() => {
-        calculateAndSend(calculatedValues.result);
-    }, [inverted.current]);
+       calculateFunction.current = inverted ? invertedFunction : originalFunction
+       calculateAndSend(calculatedValues.result);
+    }, [inverted]);
 
-    const addNumber = (number: number) => {
-     requestAnimationFrame(()=>{
-       let value =
+    const addNumber = useCallback( (number: number) => {
+      requestAnimationFrame(()=>{
+        let value =
             calculatedValues.input == "0"
                 ? `${number}`
                 : `${calculatedValues.input}${number}`;
         value = value.includes(".") ? formated.current + `${number}` : value;
-        calculateAndSend(parseFloat(value));
-     })
-    };
-    const addCero = ()=>{
+        setCalculatedValues((prev) => {
+          return {
+              result:calculatedValues.result,
+              input:value
+          };
+      });
+      })
+    },[formated,calculatedValues]);
+
+    const addCero = useCallback( ()=>{
       requestAnimationFrame(()=>{
         let decimal = "0";
         let value = `${calculatedValues.input}${decimal}`;
-        //calculateAndSend(parseFloat(value));
+        calculateAndSend(parseFloat(value));
         formated.current = value;
         setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
       })
-    }
-    const addDecimals = () => {
+
+    },[calculatedValues,formated]);
+    const addDecimals = useCallback(() => {
       requestAnimationFrame(()=>{
          let decimal = ".";
         let value = calculatedValues.input?.toString().includes(".")
             ? `${formated.current}`
             : `${formated.current}${decimal}`;
-        //calculateAndSend(parseFloat(value));
         formated.current = value;
         setCalculatedValues(prev=>{return{result:calculatedValues.result,input:value}})
       })
-    };
-    const remove = () => {
+    },[formated,calculatedValues]);
+    const remove =useCallback( () => {
       requestAnimationFrame(()=>{
         let array = calculatedValues.input?.toString().split("");
         if (
@@ -89,16 +101,18 @@ const useCalculateValues = () => {
             array?.pop();
             array && (value = array.join(""));
         }
-        calculateAndSend(parseFloat(value));
+        setCalculatedValues((prev) => {
+          return {
+              result:calculatedValues.result,
+              input:value
+          };
+      });
       })
-    };
-    const calculateResult = {
-      original: useCallback((amount)=>{return selectedDestiny === 1 ? supportedCoins[originName]["Mount"] * amount * supportedCoins["Bs"]["BS"] : supportedCoins[originName]["Mount"] * amount },[selectedDestiny,supportedCoins,originName]),
-      inverted: useCallback((amount)=>{return selectedDestiny === 1 ? (supportedCoins[originName]["Mount"] / amount) / supportedCoins["Bs"]["BS"] :  amount  / supportedCoins[originName]["Mount"]  },[selectedDestiny,supportedCoins,originName]),
-    }
-    const calculateAndSend = (amount: number | string) => {
+    },[calculatedValues]);
+    
+    const calculateAndSend =useCallback( (amount: number | string) => {
       
-        const calculated = inverted ?  calculateResult.inverted(amount):  calculateResult.original(amount) ;
+        const calculated = calculateFunction.current(amount) ;
         setCalculatedValues &&
             setCalculatedValues((prev) => {
                 return {
@@ -106,24 +120,31 @@ const useCalculateValues = () => {
                     input:amount.toString()
                 };
             });
-    };
-    const invert = () => {
-    setInverted &&  setInverted(!inverted);
-    };
+    },[calculateFunction]);
+    
+    const calculate =useCallback(()=>{
+      requestAnimationFrame(()=>{
+        calculateAndSend(calculatedValues.input);
+      })
+    },[calculatedValues])
     useEffect(() => {
         calculatedValues &&
             calculateAndSend(parseFloat(calculatedValues.input));
     }, [selectedDestiny]);
 
     return {
+      inverted,
+      setInverted,
+        originName,
         calculateAndSend,
-        invert,
         setSelectedDestiny,
         remove,
         selectedDestiny,
         addDecimals,
         addNumber,
-        addCero
+        addCero,
+        calculate,
+        colors
     };
 };
 

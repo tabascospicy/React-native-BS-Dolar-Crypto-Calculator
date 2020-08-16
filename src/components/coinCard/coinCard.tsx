@@ -7,6 +7,7 @@ import StateContext from "services/context";
 import { GlobalState } from "interfaces/interfaces";
 import Images from "components/image/index";
 import LoadingCard from "components/loadingCard/loadingCard";
+import { useTheme } from '@react-navigation/native';
 const Result: FC<CoinType> = ({
     keys = 1,
     BS = "0,00",
@@ -15,8 +16,7 @@ const Result: FC<CoinType> = ({
     name = "USD",
     ...props
 }) => {
-    const State: GlobalState = useContext(StateContext);
-    const { setOrigin, Colors, setOriginName, lottie } = State;
+    const { setOrigin, colors, setOriginName, lottie } : GlobalState = useContext(StateContext);
     const handleTouch = (key: number, name: string) => {
          setOrigin && setOrigin(key);
         setOriginName && setOriginName(name);
@@ -27,24 +27,24 @@ const Result: FC<CoinType> = ({
         !(Title === "Bs") && (
             <TouchableHighlight
                 activeOpacity={0.6}
-                underlayColor={Colors?.secondary}
+                underlayColor={colors.strong}
                 disabled={!lottie}
                 onPress={() =>handleTouch(keys, Title)}
-                style={[styles.container, { backgroundColor: Colors?.primary }]}
+                style={[styles.container, { backgroundColor: colors.primary }]}
             >
               <Fragment>
                 {lottie ? (
                     <Fragment>
                         <Images Title={Title} style={styles.icon} />
                         <View style={styles.description}>
-                            <Text style={[ styles.FontTitle, { color: Colors?.font }, ]}>
+                            <Text style={[ styles.FontTitle, { color: colors.font }, ]}>
                                 {Title == "USD" ? "Dolar libre" : Title== "USDBCV" ? "Dolar Oficial (BCV)" : Title}
                             </Text>
                             {Title !== "USD" && Title !== "USDBCV"  ? (
                                 <Text
                                     style={[
                                         styles.FontMount,
-                                        { color: Colors?.font },
+                                        { color: colors.font },
                                     ]}
                                 >
                                     USD :
@@ -56,7 +56,7 @@ const Result: FC<CoinType> = ({
                                     })}
                                 </Text>
                             ) : (
-                            <Text style={[styles.FontMount, { color: Colors?.font }]}>Bs : 
+                            <Text style={[styles.FontMount, { color: colors.font }]}>Bs : 
                             {accounting.formatMoney(BS, {
                                         symbol: "",
                                         thousand: ".",

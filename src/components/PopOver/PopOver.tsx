@@ -1,25 +1,38 @@
-import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect,useContext,useRef,useState} from 'react';
+import { StyleSheet , LayoutAnimation } from 'react-native';
 import { Layout, Popover, Text } from '@ui-kitten/components';
-import {Notifier} from "interfaces/interfaces";
-const UpdatedCoins :React.FC<Notifier> = ( {visible = false, setVisible , coins}) => {
+import {Notifier, GlobalState} from "interfaces/interfaces";
+import Context from "services/context";
+const UpdatedCoins :React.FC<Notifier> = () => {
+  const {refresh}:GlobalState = useContext(Context);
+  const [visible,setVisible] = useState(false);
 
   useEffect(()=>{
-    if(visible ==true){
-     const disappear = setTimeout(()=>{
-        setVisible(false);
-      },2000)
-      return ()=> clearTimeout(disappear);
-    }
-  },[coins])
+    requestAnimationFrame(()=>{
+      LayoutAnimation.configureNext(
+        LayoutAnimation.Presets.easeInEaseOut
+    );
+      setVisible(true);
+    const timer  = !refresh.onLoad ? setTimeout(()=>{
+      LayoutAnimation.configureNext(
+        LayoutAnimation.Presets.easeInEaseOut
+    );
+
+      setVisible(false);
+    },2000) : null;
+    return () => timer ? clearTimeout(timer) : console.log("holi");
+    })
+    
+  },[refresh])
+
   return (
     <Popover
       visible={visible}
       anchor={() => <Text></Text>}
-      onBackdropPress={() => setVisible(false)}>
+     >
       <Layout style={styles.content}>
         <Text>
-          Monedas Actualizadas!
+          {refresh.message}
         </Text>
       </Layout>
     </Popover>

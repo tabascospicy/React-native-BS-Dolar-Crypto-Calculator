@@ -9,7 +9,7 @@ const Card: FC<props> = (props) => {
 
     const [arrived, setArrived] = useState(false);
     const State: GlobalState = useContext(StateContext);
-    const {Colors} = State;
+    const {colors} = State;
     
     useEffect(() => {
         const animation = requestAnimationFrame(() => {
@@ -25,7 +25,7 @@ const Card: FC<props> = (props) => {
             style={[
                 styles.container,
                 {
-                    backgroundColor: Colors?.strong,
+                    backgroundColor: colors?.primary,
                     height: arrived ? "60%" : "2%",
                 }
             ]}

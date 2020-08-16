@@ -1,48 +1,79 @@
-import { useState, useEffect, useRef } from "react";
-import Cripto from "services/Cripto";
-import Petro from "services/Petro";
-import Dolar from "services/Dolar";
-import { Coins } from "interfaces/interfaces";
-
+import {useState, useEffect, useRef} from 'react';
+import Cripto from 'services/Cripto';
+import Petro from 'services/Petro';
+import Dolar from 'services/Dolar';
+import {Coins} from 'interfaces/interfaces';
+import AsyncStorage from '@react-native-community/async-storage';
 const useAskCoins = () => {
   const [coins, setCoins] = useState<Coins>();
   const [dolarBS] = useState(0);
+  const [refresh, setRefresh] = useState({
+    onLoad: false,
+    message: 'cargando...',
+  });
+  const [notify, setNotify] = useState(false);
+  const [lottie, setLottie] = useState(false);
+  const [error, setError] = useState(false);
   const formated = useRef(false);
   const arrived = useRef(0);
   const promedioBs = useRef('0');
   const savedCoins = useRef({});
   const promEuro = useRef(0);
-  const [notify, setNotify] = useState(false);
-  const [lottie,setLottie] = useState(false);
-  const [error, setError] = useState(false);
+  const saved = useRef(false);
   const ResetCall = () => {
-    setLottie(false);
+    arrived.current = 0;
+ //   setLottie(false);
     setError(false);
-    getCripto();
-  };
-
-  useEffect(() => {
-   
-    if (arrived.current ==4) {
-      setLottie(true);
-      arrived.current = 0; 
-      //console.log(setLottie(true))
-    }
-  }, [coins]);
-
-  useEffect(() => {
     getCripto();
     getDolar();
     getPetro();
     getEuro();
-    const updateCoins = setInterval(() => {
-      getCripto();
-      getDolar();
-      getPetro();
-      getEuro();
-    }, 60000);
-    return () => clearInterval(updateCoins);
+  };
+
+  useEffect(() => {
+    if (arrived.current == 4) {
+      setLottie(true);
+      arrived.current = 0;
+      storeData({coins,date:new Date()},"coins");
+      setRefresh({onLoad: false, message: 'Monedas Actualizadas!'});
+    }
+  }, [coins]);
+  const checkCoins = async () => {
+    const savedCoins = await getData('coins');
+    if (savedCoins) {
+      setCoins((prev) => savedCoins?.coins);
+      setLottie(true);
+    }
+  };
+  useEffect(() => {
+    checkCoins();
+    getCripto();
+    getDolar();
+    getPetro();
+    getEuro();
   }, []);
+
+  useEffect(() => {
+    console.log(refresh, 'refresh');
+  }, [refresh]);
+
+  const storeData = async (value: any, key: string) => {
+    try {
+      const format = JSON.stringify(value);
+      await AsyncStorage.setItem(key, format);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getData = async (key: string) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      value && (saved.current = true);
+       return value  != null ? JSON.parse(value) : null;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const formatCoins = (Coins: Coins) => {
     let agregarBS: Coins =
@@ -218,6 +249,8 @@ const useAskCoins = () => {
     notify,
     dolarBS,
     setNotify,
+    refresh,
+    setRefresh,
   };
 };
 export default useAskCoins;

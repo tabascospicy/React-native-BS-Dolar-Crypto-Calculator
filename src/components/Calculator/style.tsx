@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import Colors from "./../../themes/colors";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const styles = StyleSheet.create({
     container:{
       flex:1,
@@ -8,7 +9,14 @@ const styles = StyleSheet.create({
     },
     buttonsRow:{
       flex:2,
+      flexWrap:"nowrap",
       flexDirection:"row",
+      width:"100%",
+    },
+    containerInput:{
+      flex:1,
+     // width: wp('78%'),
+      minWidth:wp('28%')
     },
     exchangeButton:{
       justifyContent:"center",
@@ -20,8 +28,9 @@ const styles = StyleSheet.create({
       flexDirection:"row",
       justifyContent:"center",
       flexWrap:"wrap",
-      maxHeight:60,
+      maxHeight:80,
     },
+   
     actions:{
       flexDirection:"row",
       flex:1,
@@ -33,7 +42,7 @@ const styles = StyleSheet.create({
         fontSize:25,
       },
       selectDestiny:{
-          flex:1,
+          flex:2,
           flexDirection:"row",
           
           alignItems:"center",
@@ -46,8 +55,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         width:"50%",
-
-        maxHeight:50,
+        height:50,
         borderRadius:20,
         shadowColor: Colors.secondary,
         shadowOffset: {
@@ -63,15 +71,35 @@ const styles = StyleSheet.create({
         letterSpacing:2,
         fontSize:20
       },
-      containerInput:{
-        flex:1,
-        minWidth:100,
-      },
       rotateIcon:{
         transform:[{rotateX:"100deg"}]
       },
       padd:{
         padding:10,
+      },
+      retweet:{
+        transform:[{rotate:"100deg"}]
+      },
+      bottomRow:{
+        flex:1,
+        marginTop:90,
+        alignSelf:"flex-end",
+         flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"center"
+      },
+      rotate:{
+        flex:1,
+        maxWidth:40,
+        marginHorizontal:20,
+        padding:10,borderRadius:10, 
+      },
+      borderI:{
+        borderBottomWidth:0.2,
+        borderRightWidth:0.2,
+      },
+      borderT:{
+        borderBottomWidth:0.2,
       }
 })
 

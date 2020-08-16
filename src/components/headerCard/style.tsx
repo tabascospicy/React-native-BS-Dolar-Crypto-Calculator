@@ -3,21 +3,10 @@ import Colors from "./../../themes/colors";
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    borderRadius:30,
     padding:10,
     margin:10,
-    maxHeight:80,
     alignItems:"center",
     flexDirection:"row",
-    shadowColor: Colors.secondary,
-    shadowOffset: {
-        width: 0,
-        height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   },
   Title:{
     fontSize:10,
@@ -34,6 +23,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 60,
     height: 60,
+    borderRadius:40,
     resizeMode: "contain",
 },
 })

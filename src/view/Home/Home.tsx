@@ -1,26 +1,46 @@
-import React, { FC} from "react";
+import React, { FC , useContext} from "react";
 import styles from "./style";
-import { View} from "react-native";
+import { View,RefreshControl} from "react-native";
 import { props} from "interfaces/interfaces";
 import NavBar from "components/navBar/navBar";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer , DarkTheme } from "@react-navigation/native";
+import { NavigationContainer , DarkTheme,DefaultTheme } from "@react-navigation/native";
+import {GlobalState} from "interfaces/interfaces";
+import Context from "services/context";
 import ShowList from "./Home/Home";
-import Colors from "themes/colors";
+import {ColorsThemes} from "themes/colors";
 import Calculator from "./Calculator/Calculator";
 const Stack = createStackNavigator();
-const theme = {
+const BlueDarkTheme = {
   ...DarkTheme,
   colors: {
-    ...DarkTheme.colors,
-    background: Colors.primary
+    notification:ColorsThemes.dark.secondary,
+    card:ColorsThemes.dark.secondary,
+    border:ColorsThemes.dark.secondary,
+    text:ColorsThemes.dark.secondary,
+    background: ColorsThemes.dark.primary,
+    primary:ColorsThemes.dark.secondary
 }
 }
+const LightBlueTheme = {
+  ...DefaultTheme,
+  colors:{
+    notification:ColorsThemes.light.secondary,
+    card:ColorsThemes.light.light,
+    border:ColorsThemes.light.strong,
+    text:ColorsThemes.light.font,
+    background: ColorsThemes.light.primary,
+    primary:ColorsThemes.light.primary
+  }
+}
+
 const Home: FC<props> = ({ name }) => {
+  const {dark,refresh} :  GlobalState = useContext(Context);
+
     return (
         <View style={styles.container}>
             <NavBar />
-            <NavigationContainer theme={theme}>
+            <NavigationContainer theme={dark ? BlueDarkTheme : LightBlueTheme}>
                     <Stack.Navigator initialRouteName="Home">
                         <Stack.Screen
                             options={{ headerShown: false }}

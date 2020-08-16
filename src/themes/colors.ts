@@ -1,6 +1,9 @@
 import {theme} from "../interfaces/interfaces";
-
-const prove = {
+interface SupportedThemes {
+  dark : theme,
+  light : theme
+}
+const dark:theme = {
   primary : "#091945",
   secondary : "#6170ff",
   warning : "red",
@@ -16,20 +19,23 @@ const prove = {
 }
 
 
-const Colors : theme = prove;
 
-const actual = {
+const light : theme = {
   primary : "#FCFCFC",
-  secondary : "#C2E4FF",
+  strong : "#C2E4FF",
+  secondary:"#005598",
   warning : "red",
   info : "grey",
   success : "blue",
-  light:"#002C52",
+  light:"#FCFCFC",
   white:"#ffff",
   black:"#00000",
   dark:"#00000",
-  font:"#ffff",
+  font:"#002C52",
   grey:"grey",
-  blackground:"#FCFCFC"
 }
+const Colors : theme = dark;
+
+export const  ColorsThemes : SupportedThemes  = {light,dark};
+
 export default Colors;

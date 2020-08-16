@@ -56,6 +56,7 @@ export type GlobalState = {
   Colors? : theme,
   [key:string] : any,
   inverted? : any,
+  dark? : boolean,
   supportedCoins?:Coins,
   setInverted? :  React.Dispatch<React.SetStateAction<boolean>>,
   colocarMonto? : boolean,
@@ -72,7 +73,7 @@ export type GlobalState = {
 
 export interface CalculeValue  {
     input:string,
-    result:string,
+    result:string | number,
 }
 
 export type Button  = {

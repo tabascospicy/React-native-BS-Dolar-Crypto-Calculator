@@ -1,11 +1,11 @@
-<<<<<<< HEAD
 import React, {useState, useEffect, Fragment} from 'react';
-import {UIManager, Platform, View, StatusBar } from 'react-native';
+import {UIManager, Platform, View, StatusBar} from 'react-native';
 import Home from './src/view/Home/Home';
+import {AppearanceProvider} from 'react-native-appearance';
 import ErrorMessage from './src/components/ErrorMessage/ErrorMessage';
-import {GlobalState, CalculeValue} from './src/interfaces/interfaces';
+import {GlobalState, CalculeValue,theme} from './src/interfaces/interfaces';
 import useAskCoins from './src/Hooks/useAskCoins';
-import Colors from './src/themes/colors';
+import {ColorsThemes} from "./src/themes/colors";
 import StateProvider from './src/services/context';
 import * as eva from '@eva-design/eva';
 import {ApplicationProvider} from '@ui-kitten/components';
@@ -16,52 +16,32 @@ export default function App() {
   const [originName, setOriginName] = useState('USD');
   const [selectedDestiny, setSelectedDestiny] = useState(0);
   const [presentacion, setPresentacion] = useState(true);
-  const {ResetCall, error, coins, lottie, notify, setNotify} = useAskCoins();
   const [inverted, setInverted] = useState(false);
+  const [dark,setDark] = useState(false);
+  const [colors,setColors] = useState<theme>(ColorsThemes.dark);
   const [calculatedValues, setCalculatedValues] = useState<CalculeValue>({
     input: '0',
     result: '0',
   });
-=======
-import React, { useState } from "react";
-import { UIManager, Platform,View } from "react-native";
-import Home from "./src/view/Home/Home";
-import ErrorMessage from "./src/components/ErrorMessage/ErrorMessage";
-import { GlobalState, CalculeValue } from "./src/interfaces/interfaces";
-import useAskCoins from "./src/Hooks/useAskCoins";
-import Colors from "./src/themes/colors";
-import StateProvider from "./src/services/context";
-export default function App() {
-    const [origin, setOrigin] = useState(0);
-    const [originName, setOriginName] = useState("USD");
-    const [selectedDestiny, setSelectedDestiny] = useState(0);
-    const {
-        ResetCall,
-        error,
-        coins,
-        lottie,
-        notify,
-        setNotify,
-    } = useAskCoins();
-    const [inverted, setInverted] = useState(false);
-    const [calculatedValues, setCalculatedValues] = useState<CalculeValue>({
-        input: "0",
-        result: "0",
-    });
->>>>>>> 30214771c7016820021573bd15b28cc3506a664d
-
+  const {ResetCall, error, coins, lottie, refresh, setRefresh} = useAskCoins();
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
-<<<<<<< HEAD
   }
-  
+  useEffect(()=>{
+    setColors(prev=> dark ? ColorsThemes.dark : ColorsThemes.light);
+  },[dark])
   const GlobalValues: GlobalState = {
+    refresh,
+    setRefresh,
+    ResetCall,
     supportedCoins: coins,
+    dark,
+    setDark,
     origin,
     inverted,
-    Colors,
+    colors,
     setOrigin,
     lottie,
     originName,
@@ -72,56 +52,24 @@ export default function App() {
     setCalculatedValues,
     selectedDestiny,
     setSelectedDestiny,
+    setColors
   };
   return (
-    <View style={{flex: 1, backgroundColor: Colors.strong}}>
-      <StatusBar backgroundColor={Colors.strong} barStyle={'light-content'} />
-      <ApplicationProvider {...eva} theme={eva.dark}>
-        <StateProvider.Provider value={{...GlobalValues}}>
-          {presentacion ? (
-            <InitView />
-          ) : (
-            <Fragment>
-              <Home name="holi" />
-              {error && <ErrorMessage ResetCall={ResetCall} />}
-              <UpdatedCoins
-                coins={coins}
-                visible={notify}
-                setVisible={setNotify}
-              />
-            </Fragment>
-          )}
-        </StateProvider.Provider>
-      </ApplicationProvider>
-    </View>
+      <View style={{flex: 1, backgroundColor: colors.primary}}>
+        <StatusBar backgroundColor={colors.strong} barStyle={ dark ? 'light-content':'dark-content'} />
+        <ApplicationProvider {...eva} theme={dark ? eva.dark : eva.light}>
+          <StateProvider.Provider value={{...GlobalValues}}>
+            {presentacion ? (
+              <InitView />
+            ) : (
+              <Fragment>
+                <Home name="holi" />
+                <UpdatedCoins coins={coins} />
+              </Fragment>
+            )}
+          </StateProvider.Provider>
+        </ApplicationProvider>
+      </View>
+    
   );
-=======
-
-    const GlobalValues: GlobalState = {
-        supportedCoins: coins,
-        origin,
-        inverted,
-        Colors,
-        setOrigin,
-        lottie,
-        originName,
-        setOriginName,
-        setInverted,
-        calculatedValues,
-        setCalculatedValues,
-        selectedDestiny,
-        setSelectedDestiny,
-    };
-
-    return (
-      <View style={{flex:1,backgroundColor:Colors.strong}}>
-            
-           
-                <StateProvider.Provider value={{ ...GlobalValues }}>
-                    <Home name="holi" />
-                    {error && <ErrorMessage ResetCall={ResetCall} />}
-                </StateProvider.Provider>
-        </View>
-    );
->>>>>>> 30214771c7016820021573bd15b28cc3506a664d
 }

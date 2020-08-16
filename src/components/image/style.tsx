@@ -4,9 +4,10 @@ const style = StyleSheet.create({
   icon: {
     width: 60,
     height: 60,
+    borderRadius:40,
 },
 bcv:{
-  borderRadius:40
+  borderRadius:80
 }
 })
 

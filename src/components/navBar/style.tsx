@@ -15,9 +15,7 @@ const style = StyleSheet.create({
     paddingTop:40,
     width:"100%",
     paddingLeft:20,
-    backgroundColor:Colors.light,
     borderBottomWidth:1,
-    borderBottomColor:Colors.strong,
   },
   image:{
     height:50,
@@ -30,11 +28,24 @@ const style = StyleSheet.create({
     padding:10,
     letterSpacing:2
   },
+  button:{
+  padding:10,
+   borderRadius:15, 
+   
+   shadowOffset: {
+    width: 0,
+    height: 12,
+  },
+  shadowOpacity: 0.58,
+  shadowRadius: 16.00,
+  shadowColor: Colors.secondary,
+  elevation: 24,
+   alignSelf:"flex-end",
+   marginLeft:"auto",
+   marginRight:15,
+  },
   icon:{
-   position:"absolute",
-   right:0,
-   paddingTop:30,
-   paddingRight:40,
+  
   }
 })
 export default style;

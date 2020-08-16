@@ -1,10 +1,11 @@
-import React, { FC, useContext,useCallback,memo} from "react";
+import React, { FC, useContext,useCallback,memo,useEffect, useRef} from "react";
 import { Text,  View } from "react-native";
 import styles from "./style";
 import accounting from "accounting";
 import StateContext from "services/context";
 import { GlobalState } from "interfaces/interfaces";
 import CoinSet from "components/image/index";
+import ResultText from "./../ResultText/ResultText"
 const Result: FC = ({
     image,
     mount,
@@ -14,31 +15,19 @@ const Result: FC = ({
     input = false,
 }) => {
     const State: GlobalState = useContext(StateContext);
-    const { Colors, supportedCoins , selectedDestiny, } = State;
-
-    const isDecimalInput = useCallback(() => {
-      return mount.includes('.') ? mount : accounting.formatNumber(mount)
-    },[mount])
-
-    
+    const { colors } = State;
+  
+   
     return (
         <View
-            style={[styles.container, { backgroundColor: Colors?.strong }]}
+            style={styles.container}
         >
             <CoinSet style={styles.icon} Title={image} />
             <View style={styles.description}>
-                <Text style={[styles.Title, { color: Colors?.font }]}>
+                <Text style={[styles.Title, { color: colors?.font }]}>
                     {text}
                 </Text>
-                <Text style={[styles.Mount, { color: Colors?.font }]}>
-                    {supportedCoins && input ?  isDecimalInput() :
-                        accounting.formatMoney(mount, {
-                            symbol,
-                            thousand: ",",
-                            decimal: ".",
-                            precision: selectedDestiny ? 2 : 5,
-                        })}
-                </Text>
+                <ResultText symbol={symbol} input={input}/>
             </View>
         </View>
     );

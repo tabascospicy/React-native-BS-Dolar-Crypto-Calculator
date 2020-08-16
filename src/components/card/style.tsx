@@ -8,8 +8,7 @@ const style = StyleSheet.create({
         
         position: "relative",
         bottom: 0,
-        borderTopEndRadius: 50,
-        borderTopLeftRadius: 50,
+        
         alignSelf:"flex-end",
         //   maxHeight:100,
         marginTop:"auto",
