@@ -44,7 +44,7 @@ const getCriptoDecimals = useCallback((num)=>{
   })
 },[symbol])
   return (
-    <Text style={[styles.Mount, {color: colors?.font}, input && {borderBottomColor:colors.strong,borderBottomWidth:1}]}>
+    <Text adjustsFontSizeToFit={true} style={[styles.Mount, {color: colors?.font}, input && {borderBottomColor:colors.strong,borderBottomWidth:1}]}>
        {supportedCoins && input
         ? isDecimalInput()
         :formatResult() }

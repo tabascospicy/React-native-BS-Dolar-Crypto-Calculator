@@ -58,7 +58,7 @@ const Result: FC<props> = () => {
                         symbol: "",
                         thousand: ",",
                         decimal: ".",
-                        precision: originName==="USD" || originName==="Bs" || originName==="USDBCV" ?  2  : 5,
+                        precision: 2,
                     }
                 )} {selectedDestiny || originName==="USD" || originName==="USDBCV" ? "Bs" : " $" }
             </Text>

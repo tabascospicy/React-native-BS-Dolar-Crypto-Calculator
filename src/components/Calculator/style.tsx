@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
       flexDirection:"column",
     },
     buttonsRow:{
-      flex:2,
-      flexWrap:"nowrap",
-      flexDirection:"row",
+      height:hp("34%"),
+      flexWrap:"wrap",
+     // flexDirection:"row",
       width:"100%",
     },
     containerInput:{
