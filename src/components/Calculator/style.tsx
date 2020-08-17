@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
       flexDirection:"column",
     },
     buttonsRow:{
-      height:hp("34%"),
+      flex:1,
+      maxHeight:hp("30%"),
       flexWrap:"wrap",
      // flexDirection:"row",
       width:"100%",
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
       flex:1
     },
     numbers:{
-      flex:5,
+      flex:1,
       flexDirection:"row",
       justifyContent:"center",
       flexWrap:"wrap",
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         width:"50%",
         height:50,
+        padding:27,
         borderRadius:20,
         shadowColor: Colors.secondary,
         shadowOffset: {
@@ -81,9 +83,10 @@ const styles = StyleSheet.create({
         transform:[{rotate:"100deg"}]
       },
       bottomRow:{
-        flex:1,
-        marginTop:90,
+        //flex:1,
+        marginTop:"auto",
         alignSelf:"flex-end",
+        flexWrap:"wrap",
          flexDirection:"row",
         alignItems:"center",
         justifyContent:"center"

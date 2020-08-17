@@ -2,9 +2,6 @@ import React, {
   FC,
   useContext,
   useCallback,
-  memo,
-  useEffect,
-  useRef,
 } from 'react';
 import {Text, View} from 'react-native';
 import styles from './style';
@@ -21,13 +18,15 @@ const {colors, supportedCoins, selectedDestiny , calculatedValues,originName ,in
   }, [calculatedValues]);
 
  const formatResult = useCallback(()=>{
+   console.log(calculatedValues);
  return (!(originName==="USD" || originName==="USDBCV")) && inverted ? getCriptoDecimals(calculatedValues?.result) :  accounting.formatMoney(calculatedValues?.result, {
     symbol : symbol,
     thousand: ',',
     decimal: '.',
-    precision: 2,
+    precision: selectedDestiny || ((originName === "USD" || originName==="USDBCV") && !inverted) ? 2 : 5,
   })
  },[symbol,originName,calculatedValues]);
+ 
 const getCriptoDecimals = useCallback((num)=>{
   if(num.split("-")[1]){
     const exp = num.split("-")[1];
@@ -51,4 +50,4 @@ const getCriptoDecimals = useCallback((num)=>{
     </Text>
   );
 };
-export default memo(ResultText);
+export default ResultText;

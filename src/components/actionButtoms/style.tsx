@@ -3,10 +3,12 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container:{
       flexDirection:"row",
-      position:"absolute",
+    //  position:"absolute",
       padding:10,
-      right:0,
-      bottom:0,
+      alignSelf:"flex-end",
+  //    right:0,
+      flexWrap: 'wrap',
+   //   bottom:0,
       alignItems:"center"
     },
     icon:{
