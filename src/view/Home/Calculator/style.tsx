@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     shadowRadius: 1.00,
     shadowColor: "gray",
     elevation: 5,
-    position:"relative"
   },
   iconBox: {
     padding: 10,

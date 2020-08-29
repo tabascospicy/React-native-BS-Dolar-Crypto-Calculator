@@ -3,7 +3,9 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   Mount:{
     fontSize:20,
-    fontWeight:"800",
+    width:"100%",
+    minHeight:20,
+      fontWeight:"800",
   },
   description:{
     flex: 1,

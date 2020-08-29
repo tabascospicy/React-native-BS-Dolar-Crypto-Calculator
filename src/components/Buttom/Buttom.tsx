@@ -11,9 +11,12 @@ const Buttom: FC = ({children,press, style}) => {
   }
     return (
       <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple(dark ? "#fff" : colors.strong,ripple)}
-
-       onPress={handle}>
+      background={TouchableNativeFeedback.Ripple((dark ? "#fff" : colors.strong),ripple,45)}
+    //  onPres
+    //onMagicTap={handle}
+       onPress={handle}
+    accessibilityComponentType={"button"}
+    >
         <View style={style}>
         {children}</View>
       </TouchableNativeFeedback>

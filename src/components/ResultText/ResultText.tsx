@@ -32,7 +32,6 @@ const getCriptoDecimals = useCallback((num)=>{
     const exp = num.split("-")[1];
   let value = num.split(".")[0];
   let ceros = new Array(parseInt(exp - 1)).fill("0").join("");
-  console.log("0." +ceros + value)
    return "0."+ceros+value;
   }
   return accounting.formatMoney(num, {

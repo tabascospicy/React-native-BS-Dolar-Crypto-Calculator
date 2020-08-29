@@ -1,38 +1,69 @@
-import React, {FC, useContext} from 'react';
-import {View, Text, TouchableHighlight} from 'react-native';
+import React, {FC, useContext,useState,memo} from 'react';
+import {View, TouchableHighlight,LayoutAnimation} from 'react-native';
 import styles from './style';
 import Button from 'components/Buttom/Buttom';
 import Context from 'services/context';
 import {GlobalState} from 'interfaces/interfaces';
+import {Layout, Popover, Text} from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Back from 'react-native-vector-icons/Entypo';
 import Clipboard from 'react-native-vector-icons/MaterialCommunityIcons';
 import useCalculatedValues from 'Hooks/useCalculateValues';
+import {useClipboard} from '@react-native-community/clipboard';
 import {Radio, RadioGroup} from '@ui-kitten/components';
 const Calculator: FC = () => {
   const State = useCalculatedValues();
+  const [message, setMessage] = useState({visible: false, show: ''});
+  const [data, setClipboard] = useClipboard();
   const {
     inverted,
     setInverted,
     calculate,
-    originName,
     addCero,
-    setSelectedDestiny,
     remove,
     addDecimals,
     addNumber,
-    selectedDestiny,
     colors,
+    calculatedValues,
+    setCalculatedValues
   } = State;
   const Numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
   const invert = () => {
     requestAnimationFrame(() => {
       setInverted && setInverted(!inverted);
     });
   };
+
+  const deleteAll = () => {
+    setCalculatedValues({
+      result: "0.00",
+      input: "0",
+    });
+  };
+
+  const saveOnClip = () => {
+    setClipboard(`${calculatedValues.input} = ${calculatedValues.result}`);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setMessage({visible: true, show: 'guardado en portapapeles'});
+    setTimeout(() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setMessage({visible: false, show: 'guardado en portapapeles'});
+    }, 1000);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonsRow}>
+      <Popover
+        visible={message.visible}
+        anchor={() => <Text style={{borderRadius: 30}}></Text>}
+        style={{borderRadius: 30}}
+        onBackdropPress={() => setMessage({visible: false, show: ''})}>
+        <Layout style={{padding: 10, backgroundColor: colors.strong}}>
+          <Text style={{color: colors.font}}>{message.show}</Text>
+        </Layout>
+      </Popover>
         <View style={styles.numbers}>
           {Numbers.map((element, i) => {
             return (
@@ -61,6 +92,28 @@ const Calculator: FC = () => {
             />
           </Button>
         </View>
+        <View style={styles.buttonActionsColumn}>
+          <Button
+            style={styles.iconButtons}
+            press={saveOnClip}>
+            <Clipboard
+              name={'clipboard-outline'}
+              size={30}
+              style={styles.number}
+              color={colors.font}
+            />
+            <Button
+              style={styles.iconButtons}
+              press={deleteAll}>
+              <Clipboard
+                name={'delete-empty-outline'}
+                size={30}
+                style={styles.number}
+                color={colors.font}
+              />
+            </Button>
+          </Button>
+        </View>
       </View>
       <View style={styles.bottomRow}>
         <Button
@@ -85,4 +138,4 @@ const Calculator: FC = () => {
     </View>
   );
 };
-export default Calculator;
+export default memo(Calculator);

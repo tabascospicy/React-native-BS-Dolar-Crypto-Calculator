@@ -14,7 +14,6 @@ const Result: FC<props> = () => {
         supportedCoins,
         originName,
         colors,
-        setInverted
     } :GlobalState = useContext(StateContext);
 
     //condiciones cuando el origen es USD y cuando el Origen es USDBCV
@@ -78,10 +77,9 @@ const Result: FC<props> = () => {
             </View>            
             <HeaderCard
                 text={"Al Cambio"}
-                symbol={inverted ? " = $" : selectedDestiny ? " = Bs " : " = $ "}
+                symbol={ (originName==="USD" || originName==="USDBCV") ? (inverted ? " = $" :" = Bs") : inverted ?  " = $" : selectedDestiny ? " = Bs" : " = $"}
                 image={getResultImage()}
             ></HeaderCard>
-            
             </View>
         </View>
     );

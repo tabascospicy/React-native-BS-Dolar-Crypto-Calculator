@@ -4,20 +4,34 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 const styles = StyleSheet.create({
     container:{
       flex:1,
-      flexWrap:"wrap",
       flexDirection:"column",
     },
     buttonsRow:{
       flex:1,
-      maxHeight:hp("30%"),
+  //    maxHeight:hp("30%"),
+  //    alignItems:"center",
+ //     justifyContent:"center",
+      flexDirection:"row",
       flexWrap:"wrap",
-     // flexDirection:"row",
-      width:"100%",
+    //  width:"100%",
+    },
+    buttonActionsColumn:{
+      flex:1,
+      maxWidth:wp("15%"),
+      flexDirection:"column",
+    },
+
+    buttonActions:{
+      flex:1
     },
     containerInput:{
       flex:1,
+      minWidth:wp('26%'),
+      height:hp('10%'),
      // width: wp('78%'),
-      minWidth:wp('28%')
+    },
+    iconButtons:{
+      flex:1
     },
     exchangeButton:{
       justifyContent:"center",
@@ -27,9 +41,9 @@ const styles = StyleSheet.create({
     numbers:{
       flex:1,
       flexDirection:"row",
-      justifyContent:"center",
+     // justifyContent:"center",
       flexWrap:"wrap",
-      maxHeight:80,
+      //maxHeight:80,
     },
    
     actions:{

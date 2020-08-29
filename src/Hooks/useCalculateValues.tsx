@@ -111,7 +111,6 @@ const useCalculateValues = () => {
     },[calculatedValues]);
     
     const calculateAndSend =useCallback( (amount: number | string) => {
-      
         const calculated = calculateFunction.current(amount) ;
         setCalculatedValues &&
             setCalculatedValues((prev) => {
@@ -143,6 +142,8 @@ const useCalculateValues = () => {
         addDecimals,
         addNumber,
         addCero,
+        calculatedValues,
+        setCalculatedValues,
         calculate,
         colors
     };
